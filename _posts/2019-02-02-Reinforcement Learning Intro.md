@@ -5,9 +5,7 @@ categories: [ Jekyll, tutorial ]
 image: https://miro.medium.com/max/1000/0*NlO0vViTFWhERLds
 ---
 
-### A Gentle Guide to applying Markov Decision Processes, in Plain English
-
-Comment out ![](https://miro.medium.com/max/1000/0*NlO0vViTFWhERLds)
+A Gentle Guide to applying Markov Decision Processes, in Plain English
 
 Photo by [Philippe Murray-Pietsch](https://unsplash.com/@pmpietsch) on [Unsplash](https://unsplash.com)
 
