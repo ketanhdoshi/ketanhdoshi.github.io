@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Machine Learning with GeoLocation Data Made Simple - Essential Techniques
-categories: [ Jekyll, tutorial ]
-image: https://miro.medium.com/max/1000/0*NlO0vViTFWhERLds
+title: Leveraging GeoLocation Data with Machine Learning - Essential Techniques
+categories: [ GeoLocation, tutorial ]
+image: https://images.unsplash.com/photo-1537429149818-2d0e3e20857b?w=600&q=60
 ---
 
 ### A Gentle Guide to Geo Data, in Plain English
