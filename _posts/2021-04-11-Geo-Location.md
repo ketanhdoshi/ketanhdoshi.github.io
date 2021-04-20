@@ -11,7 +11,7 @@ Location data is an important category of data that you frequently have to deal 
 
 For instance, you might want to predict e-commerce sales projections based on your customer data. The machine learning model might be able to identify more accurate customer buying patterns by also accounting for the customer location information. This would become all the more important if this was for a physical site (rather than online) such as retail stores, restaurants, hotels, or hospitals.
 
-![(Source)]({{ site.baseurl }}/images/GeoLocIntro/Geo%20Location%20Data%202.png)
+![(Source)]({{ site.baseurl }}/assets/images/GeoLocIntro/Geo%20Location%20Data%202.png)
 
 In this article, my goal is to provide an overview of dealing with geolocation data for machine learning applications. This is a vast subject so I will try to give you a flavor of the issues involved. In future articles, I hope to dive deeper into some of those specific areas.
 
@@ -82,20 +82,18 @@ Geopandas can also conveniently load geospatial data from all of these different
 {% gist e5b60f030e6cdca0f8f919094b00b41d %}
 
 ## Pre-processing geodata (Coordinate Reference Systems)
-Our geodata contains (x, y) coordinates of geographical locations usually as latitude and longitude numbers. ~~However, oddly enough, just by themselves, those coordinates cannot be uniquely mapped to an actual place in the real world.~~
+Our geodata contains (x, y) coordinates of geographical locations usually as latitude and longitude numbers. However, oddly enough, just by themselves, those coordinates cannot be uniquely mapped to an actual place in the real world.
 
 Those coordinates are just numbers in an arbitrary space. For them to uniquely map to an actual place in the real world, they must be associated with a coordinate system, known as a CRS.
 
-TK - pic of CRS?
-https://commons.wikimedia.org/wiki/File:Geographic_coordinates_sphere_2.svg
+![(Image by Author)]({{ site.baseurl }}/images/GeoLocIntro/../../../../assets/images/GeoLocIntro/Geo%20Coordinates.png)
 
 For our purposes, it is enough to know that, because our earth is not a perfect sphere, there is no one perfect universal CRS. We have many different CRSs, each optimized for specific purposes or different regions of the globe.
 
 ### Pre-processing geodata (Map Projections)
 Similarly, the CRS is used to project the location coordinates onto a map for visualization.
 
-TK - pic of Projection?
-https://commons.wikimedia.org/wiki/Category:Map_projections#/media/File:Eckert-1_map_projection.jpg
+![(Image by Author)]({{ site.baseurl }}/images/GeoLocIntro/../../../../assets/images/GeoLocIntro/Map%20Projection.jpg)
 
 Therefore, if you obtain geodata from different sources, you must take care to re-project all those coordinates onto the same CRS. And also make sure that it matches the CRS used by the visualization map. Otherwise, your location coordinates will not be aligned correctly.
 
@@ -111,8 +109,6 @@ Convert it to a GeoDataFrame by transforming the location information into its g
 And then plot the GeoDataFrame.
 
 By themselves, the data points do not carry enough context. Since these are locations in New York City, you must overlay them on a base map of New York (which we had loaded from a Shapefile) to make it meaningful.
-
-TK - pic of Heatmap or Chloropleth?
 
 ==Example code to plot (with geopandas built-in plot) with picture ==
 
