@@ -7,6 +7,8 @@ image: https://images.unsplash.com/photo-1508175800969-525c72a047dd?w=1200
 
 #### A Gentle Overview of RL solutions, and how to categorize them. Important takeaways from the Bellman equation, in Plain English
 
+Photo by [Dominik Scythe](https://unsplash.com/@drscythe) on [Unsplash](https://unsplash.com)
+
 This is the second article in my series on Reinforcement Learning (RL). Now that we understand what an RL Problem is, let’s look at the approaches used to solve it.
 
 Here’s a quick summary of the previous and following articles in the series. My goal throughout will be to understand not just how something works but why it works that way.

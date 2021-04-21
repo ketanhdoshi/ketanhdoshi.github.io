@@ -7,6 +7,8 @@ image: https://images.unsplash.com/photo-1592398191627-25b41eeaa398?w=1200
 
 #### A Visual Guide to techniques used by Value-based and Policy-based solutions, in Plain English.
 
+Photo by [Aidan Howe](https://unsplash.com/@aidanhowe) on [Unsplash](https://unsplash.com)
+
 This is the third article in my series on Reinforcement Learning (RL). Now that we understand what an RL Problem is, and the types of solutions available, we’ll now learn about the core techniques used by all solutions. 
 
 Using an iterative algorithm as a framework to incrementally improve predictions, we’ll understand the fundamental similarities and differences between Value-based and Policy-based solutions.

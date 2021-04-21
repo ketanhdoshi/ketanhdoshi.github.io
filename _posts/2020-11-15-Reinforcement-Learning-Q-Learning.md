@@ -7,6 +7,8 @@ image: https://images.unsplash.com/flagged/photo-1570551502611-c590dc45f644?w=12
 
 #### A Visual Guide to how and why the Q Learning Algorithm works, in Plain English
 
+Photo by [Carlos Esteves](https://unsplash.com/@dimage_carlos) on [Unsplash](https://unsplash.com)
+
 This is the fourth article in my series on Reinforcement Learning (RL). We now have a good understanding of the concepts that form the building blocks of an RL problem, and the techniques used to solve them. We can now bring these together to learn about complete solutions used by the most popular RL algorithms.
 
 In this article, it is exciting to now dive into our first RL algorithm and go over the details of Q Learning! You can find many resources explaining step-by-step what the algorithm does, but my aim with this article is to give an intuitive sense of why this algorithm converges and gives us the optimal values.
