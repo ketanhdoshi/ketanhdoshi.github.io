@@ -5,7 +5,7 @@ categories: [ Reinforcement Learning, tutorial ]
 image: https://miro.medium.com/max/1000/0*jQixxkIBOkdrsAui
 ---
 
-### A Gentle Overview of RL solutions, and how to categorize them. Important takeaways from the Bellman equation, in Plain English
+#### A Gentle Overview of RL solutions, and how to categorize them. Important takeaways from the Bellman equation, in Plain English
 
 This is the second article in my series on Reinforcement Learning (RL). Now that we understand what an RL Problem is, let’s look at the approaches used to solve it.
 
@@ -22,7 +22,7 @@ Here’s a quick summary of the previous and following articles in the series. M
 ## RL Solution Categories
 ‘Solving’ a Reinforcement Learning problem basically amounts to finding the Optimal Policy (or Optimal Value). There are many algorithms, which we can group into different categories.
 
-### Model-based vs Model-free
+#### Model-based vs Model-free
 Very broadly, solutions are either:
 - Model-based (aka Planning)
 - Model-free (aka Reinforcement Learning)
@@ -35,7 +35,7 @@ Model-free approaches are used when the environment is very complex and its inte
 
 ![Model-free: Environment is a black box (Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Approach-2.jpg)
 
-### Prediction vs Control
+#### Prediction vs Control
 Another high-level distinction is between Prediction and Control.
 
 With a Prediction problem, we are given a Policy as input, and the goal is to output the corresponding Value function. This could be any Policy, not necessarily an Optimal Policy.
@@ -46,7 +46,7 @@ With a Control problem, no input is provided, and the goal is to explore the pol
 
 Most practical problems are Control problems, as our goal is to find the Optimal Policy.
 
-### Classifying Popular RL Algorithms
+#### Classifying Popular RL Algorithms
 The most common RL Algorithms can be categorized as below:
 
 ![Taxonomy of well-known RL Solutions (Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Approach-4.jpg)
@@ -63,7 +63,7 @@ Most real-world problems are model-free because the environment is usually too c
 ## Model-free Approaches
 Model-free solutions, by contrast, are able to observe the environment’s behavior only by actually interacting with it.
 
-### Interact with the environment
+#### Interact with the environment
 Since the internal operation of the environment is invisible to us, how does the model-free algorithm observe the environment’s behavior?
 
 We learn how it behaves by interacting with it, one action at a time. The algorithm acts as the agent, takes an action, observes the next state and reward, and repeats.
@@ -72,7 +72,7 @@ We learn how it behaves by interacting with it, one action at a time. The algori
 
 The agent acquires experience through trial and error. It tries steps and receives positive or negative feedback. This is much the same as a human would learn.
 
-### Trajectory of interactions
+#### Trajectory of interactions
 As the agent takes each step, it follows a path (ie. trajectory).
 
 ![A trajectory of interactions (Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Interact-2.png)
@@ -86,7 +86,7 @@ The math is actually quite intuitive — it is all based on one simple relations
 
 This relationship is the foundation for all the RL algorithms. This equation has several forms, but they are all based on the same basic idea. Let’s go through this step-by-step to build up the intuition for it.
 
-### Work back from a Terminal State (makes it easier to understand)
+#### Work back from a Terminal State (makes it easier to understand)
 Consider the reward by taking an action from a state to reach a terminal state.
 
 ![Reward when reaching a terminal state (Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-1.jpg)
@@ -99,12 +99,12 @@ Now consider the previous state S6. The return from S6 is the reward obtained by
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-3.jpg)
 
-### Bellman Equation for Return
+#### Bellman Equation for Return
 In general, the return from any state can be decomposed into two parts — the immediate reward from the action to reach the next state, plus the Discounted Return from that next state by following the same policy for all subsequent steps. This recursive relationship is known as the Bellman Equation.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-4.jpg)
 
-### Bellman Equation for State Value
+#### Bellman Equation for State Value
 Return is the discounted reward for a single path. State Value is obtained by taking the average of the Return over many paths (ie. the Expectation of the Return).
 
 So State Value can be similarly decomposed into two parts — the immediate reward from the next action to reach the next state, plus the Discounted Value of that next state by following the policy for all subsequent steps.
@@ -119,12 +119,12 @@ Similarly, the State-Action Value can be decomposed into two parts — the immed
 ## Why is the Bellman Equation useful?
 There are two key observations that we can make from the Bellman Equation.
 
-### Return can be computed recursively without going to the end of the episode
+#### Return can be computed recursively without going to the end of the episode
 The first point is that, in order to compute the Return, we don’t have to go all the way to the end of the episode. Episodes can be very long (and expensive to traverse), or they could be never-ending. Instead, we can use this recursive relationship.
 
 If we know the Return from the next step, then we can piggy-back on that. We can take just a single step, observe that reward, and then re-use the subsequent Return without traversing the whole episode beyond that.
 
-### We can work with estimates, rather than exact values
+#### We can work with estimates, rather than exact values
 The second point is that there are two ways to compute the same thing:
 - One is the Return from the current state.
 - Second is the reward from one step plus the Return from the next state.
