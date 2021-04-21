@@ -111,10 +111,10 @@ So State Value can be similarly decomposed into two parts — the immediate rewa
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-5.jpg)
 
-### Bellman Equation for State-Action Value
+#### Bellman Equation for State-Action Value
 Similarly, the State-Action Value can be decomposed into two parts — the immediate reward from that action to reach the next state, plus the Discounted Value of that next state by following the policy for all subsequent steps.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-6.jpg)
+![(Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-6.png)
 
 ## Why is the Bellman Equation useful?
 There are two key observations that we can make from the Bellman Equation.
