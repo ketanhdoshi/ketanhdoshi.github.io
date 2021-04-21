@@ -2,7 +2,7 @@
 layout: post
 title: Reinforcement Learning Made Simple (Part 2) Solution Approaches
 categories: [ Reinforcement Learning, tutorial ]
-image: https://miro.medium.com/max/1000/0*jQixxkIBOkdrsAui
+image: https://images.unsplash.com/photo-1508175800969-525c72a047dd?w=1200
 ---
 
 #### A Gentle Overview of RL solutions, and how to categorize them. Important takeaways from the Bellman equation, in Plain English

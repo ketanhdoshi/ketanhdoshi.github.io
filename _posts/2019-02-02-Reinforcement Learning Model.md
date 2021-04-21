@@ -2,7 +2,7 @@
 layout: post
 title: Reinforcement Learning Explained Visually (Part 3) - Model-free solutions, step-by-step
 categories: [ Jekyll, tutorial ]
-image: https://miro.medium.com/max/1000/0*Y91f-t4jewCb0UaW
+image: https://images.unsplash.com/photo-1592398191627-25b41eeaa398?w=1200
 ---
 
 #### A Visual Guide to techniques used by Value-based and Policy-based solutions, in Plain English.
