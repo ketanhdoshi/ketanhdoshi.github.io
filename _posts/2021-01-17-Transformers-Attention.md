@@ -185,7 +185,7 @@ Therefore each cell in the resulting Attention Score corresponds to the interact
 
 Similarly, the Masking masks out the later words in the target output, as was explained in detail in the second article of the series.
 
-Conclusion
+## Conclusion
 Hopefully, this gives you a good sense of what the Attention modules in the Transformer do. When put together with the end-to-end flow of the Transformer as a whole that we went over in the second article, we have now covered the detailed operation of the entire Transformer architecture.
 
 We now understand exactly _what_ the Transformer does. But we haven’t fully answered the question of _why_ the Transformer’s Attention performs the calculations that it does. Why does it use the notions of Query, Key, and Value, and why does it perform the matrix multiplications that we just saw?
