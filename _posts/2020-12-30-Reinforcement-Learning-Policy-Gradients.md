@@ -166,7 +166,6 @@ This Loss is used to train the Policy Network, and then the cycle repeats for th
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/RLPolicyGradient/PG-12.png)
 
-
 Conclusion
 We have now seen why the policy-based Policy Gradient method is used, and how the algorithm works. In the previous article, we had also seen the value-based DQN algorithm.
 
