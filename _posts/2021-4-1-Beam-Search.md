@@ -40,7 +40,7 @@ Text is a sequence of words (or characters), and the NLP model constructs a voca
 
 The model takes the source sentence as its input and passes it through an Embedding layer followed by an Encoder. The Encoder then outputs an encoded representation that compactly captures the essential features of the input.
 
-This representation is then fed to a Decoder along with a “<START>” token to seed its output. The Decoder uses these to generate its own output, which is an encoded representation of the sentence in the target language.
+This representation is then fed to a Decoder along with a “&lt;START&gt;” token to seed its output. The Decoder uses these to generate its own output, which is an encoded representation of the sentence in the target language.
 
 This is then passed through an output layer, which might consist of some Linear layers followed by a Softmax. The Linear layers output a score of the likelihood of occurrence of each word in the vocabulary, at each position in the output sequence. The Softmax then converts those scores into probabilities.
 
@@ -81,7 +81,7 @@ Let’s take a simple example with a Beam width of 2, and using characters to ke
 
 **First Position**
 
-- Consider the output of the model at the first position. It starts with the “<START>” token and obtains probabilities for each word. It now selects the _two_ best characters in that position. eg. “A” and “C”.
+- Consider the output of the model at the first position. It starts with the "&lt;START&gt;" token and obtains probabilities for each word. It now selects the _two_ best characters in that position. eg. “A” and “C”.
 
 **Second Position**
 
@@ -95,7 +95,7 @@ Let’s take a simple example with a Beam width of 2, and using characters to ke
 
 **Repeat till END token**
 
-- It continues doing this till it picks an “<END>” token as the best character for some position, which then concludes that branch of the sequence.
+- It continues doing this till it picks an “&lt;END&gt;” token as the best character for some position, which then concludes that branch of the sequence.
 
 It finally ends up with the two best sequences and predicts the one with the higher overall probability.
 
@@ -111,7 +111,7 @@ Let’s focus on the Decoder component and the output layers.
 
 **First Position**
 
-In the first timestep, it uses the Encoder’s output and an input of a “<START>” token to generate the character probabilities for the first position.
+In the first timestep, it uses the Encoder’s output and an input of a “&lt;START&gt;” token to generate the character probabilities for the first position.
 
 ![Character probabilities for the first position (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Seq-Seq-3.png)
 
@@ -119,7 +119,7 @@ Now it picks two characters with the highest probability eg. “A” and “C”
 
 **Second Position**
 
-For the second timestep, it then runs the Decoder twice using the Encoder’s output as before. Along with the “<START>” token in the first position, it forces the input of the second position to be “A” in the first Decoder run. In the second Decoder run, it forces the input of the second position to be “C”.
+For the second timestep, it then runs the Decoder twice using the Encoder’s output as before. Along with the “&lt;START&gt;” token in the first position, it forces the input of the second position to be “A” in the first Decoder run. In the second Decoder run, it forces the input of the second position to be “C”.
 
 ![Character probabilities for the second position (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Beam-2.png)
 
@@ -133,7 +133,7 @@ It does this for both Decoder runs and picks the character pairs with the highes
 
 **Third Position**
 
-For the third time step, it again runs the Decoder twice as before. Along with the “<START>” token in the first position, it forces the input of the second position and third positions to be “A” and “B” respectively in the first Decoder run. In the second Decoder run, it forces the input of the second position and third positions to be “A” and “E” respectively.
+For the third time step, it again runs the Decoder twice as before. Along with the “&lt;START&gt;” token in the first position, it forces the input of the second position and third positions to be “A” and “B” respectively in the first Decoder run. In the second Decoder run, it forces the input of the second position and third positions to be “A” and “E” respectively.
 
 ![Character probabilities for the third position (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Beam-4.png)
 
@@ -147,7 +147,7 @@ It picks the two best ones across both runs, and therefore picks “ABC” and �
 
 **Repeat till END token**
 
-It repeats this process till it generates two best sequences that end with an “<END>” token.
+It repeats this process till it generates two best sequences that end with an “&lt;END&gt;” token.
 
 It then chooses the sequence that has the highest combined probability to make its final prediction.
 
