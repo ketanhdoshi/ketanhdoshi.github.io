@@ -38,8 +38,8 @@ For our demo, we will use the Urban Sound 8K dataset that consists of a corpus o
 
 After downloading the dataset, we see that it consists of two parts:
 
-- Audio files in the ‘audio’ folder: It has 10 sub-folders named ‘fold1’ through ‘fold10’. Each sub-folder contains a number of ‘.wav’ audio samples eg. ‘fold1/103074–7–1–0.wav’
-- Metadata in the ‘metadata’ folder: It has a file ‘UrbanSound8K.csv’ that contains information about each audio sample in the dataset such as its filename, its class label, the ‘fold’ sub-folder location, and so on. The class label is a numeric Class ID from 0–9 for each of the 10 classes. eg. the number 0 means air conditioner, 1 is a car horn, and so on.
+- **Audio files** in the ‘_audio_’ folder: It has 10 sub-folders named ‘_fold1_’ through ‘_fold10_’. Each sub-folder contains a number of ‘_.wav_’ audio samples eg. ‘_fold1/103074–7–1–0.wav_’
+- **Metadata** in the ‘metadata’ folder: It has a file ‘_UrbanSound8K.csv_’ that contains information about each audio sample in the dataset such as its filename, its class label, the ‘fold’ sub-folder location, and so on. The class label is a numeric Class ID from 0–9 for each of the 10 classes. eg. the number 0 means air conditioner, 1 is a car horn, and so on.
 
 The samples are around 4 seconds in length. Here’s what one sample looks like:
 
@@ -60,7 +60,7 @@ The training data for this problem will be fairly simple:
 
 Since the dataset has a metadata file that contains this information already, we can use that directly. The metadata contains information about each audio file.
 
-![]({{ site.baseurl }}/assets/images/AudioClassification/Metadata-1.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/metadata-1.png)
 
 Since it is a CSV file, we can use Pandas to read it. We can prepare the feature and label data from the metadata.
 
@@ -68,7 +68,7 @@ Since it is a CSV file, we can use Pandas to read it. We can prepare the feature
 
 This gives us the information we need for our training data.
 
-![Training data with audio file paths and class IDs]({{ site.baseurl }}/assets/images/AudioClassification/Metadata-2.png)
+![Training data with audio file paths and class IDs]({{ site.baseurl }}/assets/images/AudioClassification/metadata-2.png)
 
 #### Scan the audio file directory when metadata isn’t available
 Having the metadata file made things easy for us. How would we prepare our data for datasets that do not contain a metadata file?
