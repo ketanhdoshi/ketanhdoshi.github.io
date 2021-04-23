@@ -105,7 +105,9 @@ The Attention module takes the encoded image vector along with the current outpu
 For instance, for the caption "The dog is behind the curtain", the model focuses on the dog in the photo as it generates the word 'dog' and then shifts its focus to the curtain when it reaches the word 'curtain', as you would expect.
 
 ## Architecture - Transformers
-When talking about Attention, the current giant is undoubtedly the Transformer architecture. It revolves around Attention at its core and does not use the Recurrent Network which has been a NLP mainstay for years.
+When talking about Attention, the current giant is undoubtedly the Transformer. It revolves around Attention at its core and does not use the Recurrent Network which has been a NLP mainstay for years. The architecture is very similar to the Encoder-Decoder with the Transformer replacing the LSTM.
+
+![Image Caption architecture with Transformer (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-9.png)
 
 A few different variants of the Transformer architecture have been proposed to address the Image Captioning problem. One approach attempts to encode not just the individual objects in the photo but also their spatial relationships, as that is important in understanding the scene. For instance, knowing whether an object is under, behind or next to another object provides useful context in generating a caption.
 
@@ -116,7 +118,7 @@ Hence it can represent not just a single caption but multiple captions for diffe
 
 ![(Source https://arxiv.org/pdf/1511.07571.pdf)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Example-2.png)
 
-## Beam Search
+## Sentence Generator - Beam Search
 When the Sentence Generator produces the final caption, it can use Beam Search rather than Greedy Search that we referred to above. Rather than just picking the single word with the highest probability at each position, Beam Search chooses several words at each step, based on the combined probability of all the words in the sentence till that point.
 
 ![Beam Search example, with width = 2 (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Beam-1.png)
