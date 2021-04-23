@@ -114,7 +114,7 @@ Another variant of the Object Detection approach is known as Dense Captioning. T
 
 Hence it can represent not just a single caption but multiple captions for different regions of the image. This model helps it capture all of the detail within the image.
 
-![(Source https://arxiv.org/pdf/1511.07571.pdf)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Example-2.png
+![(Source https://arxiv.org/pdf/1511.07571.pdf)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Example-2.png)
 
 ## Beam Search
 When the Sentence Generator produces the final caption, it can use Beam Search rather than Greedy Search that we referred to above. Rather than just picking the single word with the highest probability at each position, Beam Search chooses several words at each step, based on the combined probability of all the words in the sentence till that point.
@@ -124,7 +124,7 @@ When the Sentence Generator produces the final caption, it can use Beam Search r
 Beam Search is very effective and is widely used in many NLP applications. I have another article that explains its operation in detail, in a visual way.
 If you are interested I encourage you to take a look.
 
-## Bleu Score
+## Metric - Bleu Score
 Once the caption is generated how do we decide how good it is? A common metric for evaluating Image Caption models is the Bleu Score. It is a popular metric for other NLP applications like translation and language models as well.
 
 It is a simple metric and measures the number of sequential words that match between the predicted and the ground truth caption. It compares n-grams of various lengths from 1 through 4 to do this.
@@ -132,11 +132,11 @@ It is a simple metric and measures the number of sequential words that match bet
 eg. Predicted Caption: "A dog stands on green grass"
 Ground Truth Caption: "The dog is standing on the grass"
 
-The predicted words that also occur in the true caption are "dog", "on" and "grass", out of a total of six predicted words.
-
 _Bleu Score for 1-gram = Correctly Predicted Words / Total predicted Words_
 
-_Bleu Score for 1-gram = 3/6 = 0.5_
+The predicted words that also occur in the true caption are "dog", "on" and "grass", out of a total of six predicted words.
+
+_Bleu Score for 1-gram (ie. single words) = 3/6 = 0.5_
 
 ## Conclusion
 With the advances made in Computer Vision and NLP, today's Image Captioning models are able to produce results that almost match human performance. When you input a photograph and get back a perfect human-readable caption, it almost feels like science fiction!
