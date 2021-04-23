@@ -24,7 +24,7 @@ Broadly speaking there are two primary components:
 1. An Image Feature Processor
    This takes the source photo as input and produces an encoded representation of it that captures its essential features.
 
-   ![Image input to an 'image Encoder' and outputs an encoded vector (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-1.jpg)
+   ![Image input to an 'image Encoder' and outputs an encoded vector (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-1.png)
 
    This generally uses a CNN architecture, and is usually done using transfer learning. We take a CNN model that was pre-trained for image classification and remove the final section which is the 'classifier'. 
    
@@ -32,7 +32,7 @@ Broadly speaking there are two primary components:
    
    eg. It starts by extracting simple geometric shapes like curves and semi-circles in the initial layers, progresses to higher-level structures such as noses, eyes and hands and eventually identifies elements such as faces and wheels.
 
-   ![Image classification network showing the two sections and cutting off the classifier (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-2.jpg)
+   ![Image classification network showing the two sections and cutting off the classifier (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-2.png)
 
    In an Image Classification model, this feature map is then fed to the last stage which is the Classifier that generates the final output prediction of the class (eg. cat or car) of the primary object in the image.
 
@@ -43,27 +43,27 @@ Broadly speaking there are two primary components:
 
    Typically this is a Recurrent Network model consisting of a stack of LSTM layers fed by an Embedding layer and ending in the Output layers.
 
-   ![LSTM network with initial state and sequence so far as input, output fed back (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-3.jpg)
+   ![LSTM network with initial state and sequence so far as input, output fed back (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-3.png)
    
    It takes the image encoded vector as its initial state and is seeded with a minimal input sequence consisting of only a 'Start' token. It generates its prediction in a loop, outputting one word at a time which is then fed back to the network as input for the next iteration. Therefore at each step it takes the sequence of words predicted so far and generates the next word in the sequence. Finally it outputs an 'End' token which completes the sequence. That sequence is then output as the predicted caption.
 
 3. Sentence Generator
    
-   ![ (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-4.jpg)
+   ![ (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-4.png)
 
 Almost all Image Captioning architectures use this approach with the two components we've just seen. However, over the years many variations of this framework have evolved.
 
 ## Deep Learning Architecture - "Inject"
 Perhaps the most common deep learning architecture for Image Captioning is called the "Inject" architecture and directly connects up the Image Feature Processor directly to the Text Sequence Generator as described above.
 
-![Image Feature Encoder connected to Text Generator (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-5.jpg)
+![Image Feature Encoder connected to Text Generator (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-5.png)
 
 ## Deep Learning Architecture - "Merge"
 The Inject architecture was the original architecture for Image Captioning and is still very popular. However an alternative which gets called the "Merge" architecture has been found to produce better results.
 
 Rather than connecting the Image Processor as the input of the Text Generator sequentially, the two components operate independently of each other. In other words, the CNN architecture processes only the image and the Text Generator processes only the text generated so far.
 
-![Merge architecture (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-6.jpg)
+![Merge architecture (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-6.png)
 
 The outputs of these two networks are then combined together with a simple Linear and Softmax layer, which does the job of interpreting those outputs and producing the final predicted caption.
 
@@ -76,7 +76,7 @@ Earlier we talked about using the backbone from a pre-trained Image Classificati
 
 However, in most photos you are likely to have multiple objects of interest. Instead of using an Image Classification backbone, why not use a pre-trained Object Detection backbone?
 
-![Object Detection backbone (By Comunidad de Software Libre Hackem [Research Group] - https://www.youtube.com/watch?v=ZmMFsL1ahI4, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=92687514)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-7.jpg)
+![Object Detection backbone (By Comunidad de Software Libre Hackem [Research Group] - https://www.youtube.com/watch?v=ZmMFsL1ahI4, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=92687514)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-7.png)
 
 Since the Object Detection model identifies bounding boxes around multiple prominent objects in the scene, it is able to provide a richer encoded representation of the image, which can then be used by the Text Generator to include a mention of all of those objects in its caption.
 
@@ -85,11 +85,11 @@ Over the last few years, the use of Attention with NLP models has been gaining a
 
 It is therefore not surprising to find that Attention has also been applied to Image Captioning resulting in state-of-the-art results.
 
-![Image Caption architecture with Attention (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-8.jpg)
+![Image Caption architecture with Attention (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-8.png)
 
 As the Text Sequence Generator produces each word of the caption, Attention is used to help it concentrate on the part of the image that is most relevant to the word it is generating.
 
-![Example of Attention focusing on different parts of the image (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-9.jpg)
+![Example of Attention focusing on different parts of the image (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-9.png)
 
 For instance, for the caption "man standing next to car", the model focuses on the man in the photo as it generates the word 'man' and then shifts its focus to the car when it reaches the word 'car', as you would expect.
 
