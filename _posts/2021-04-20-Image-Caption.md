@@ -62,12 +62,12 @@ Broadly speaking Image Captioning makes use of three primary components. By the 
 
 Almost all Image Captioning architectures make use of this approach with the three components we've just seen. However, over the years many variations of this framework have evolved.
 
-## Deep Learning Architecture - Encoder-Decoder
+## Architecture - Encoder-Decoder
 Perhaps the most common deep learning architecture for Image Captioning is sometimes called the "Inject" architecture and directly connects up the Image Feature Encoder to the Sequence Decoder, followed by the Sentence Generator, as described above. 
 
 ![Image Feature Encoder connected to Text Generator (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-5.png)
 
-## Deep Learning Architecture - Multi-Modal
+## Architecture - Multi-Modal
 The Inject architecture was the original architecture for Image Captioning and is still very popular. However an alternative which gets called the "Merge" architecture has been found to produce better results.
 
 Rather than connecting the Image Encoder as the input of the Seqeunce Decoder sequentially, the two components operate independently of each other. In other words, we don't mix the two modes - images with text.
@@ -82,7 +82,7 @@ Another advantage of this approach is that it allows us to use transfer learning
 
 Many different ways of combining the outputs have been tried eg. concatenate, multiplication and so on. The approach that usually works best is to use addition.
 
-## Deep Learning Architecture - Object Detection backbone
+## Architecture - Object Detection backbone
 Earlier we talked about using the backbone from a pre-trained Image Classification model for the Image Encoder. This type of model is usually trained to identify a single class for the whole picture. 
 
 However, in most photos you are likely to have multiple objects of interest. Instead of using an Image Classification backbone, why not use a pre-trained Object Detection backbone to extract features from the image?
@@ -91,7 +91,7 @@ However, in most photos you are likely to have multiple objects of interest. Ins
 
 The Object Detection model generates bounding boxes around all the prominent objects in the scene. Not only does it label multiple objects, but it identifies their relative positions within the picture. Thus it is able to provide a richer encoded representation of the image, which can then be used by the Sequence Decoder to include a mention of all of those objects in its caption.
 
-## Deep Learning Architecture - Encoder-Decoder with Attention
+## Architecture - Encoder-Decoder with Attention
 Over the last few years, the use of Attention with NLP models has been gaining a lot of traction. It has been found to significantly improve performance of NLP applications. As the model generates each word of the output, Attention helps it focus on the words from the input sequence that are most relevant to that output word.
 
 It is therefore not surprising to find that Attention has also been applied to Image Captioning resulting in state-of-the-art results.
@@ -104,12 +104,12 @@ The Attention module takes the encoded image vector along with the current outpu
 
 For instance, for the caption "The dog is behind the curtain", the model focuses on the dog in the photo as it generates the word 'dog' and then shifts its focus to the curtain when it reaches the word 'curtain', as you would expect.
 
-## Deep Learning Architecture - Transformers
+## Architecture - Transformers
 When talking about Attention, the current giant is undoubtedly the Transformer architecture. It revolves around Attention at its core and does not use the Recurrent Network which has been a NLP mainstay for years.
 
 A few different variants of the Transformer architecture have been proposed to address the Image Captioning problem. One approach attempts to encode not just the individual objects in the photo but also their spatial relationships, as that is important in understanding the scene. For instance, knowing whether an object is under, behind or next to another object provides useful context in generating a caption.
 
-## Deep Learning Architecture - Dense Captioning
+## Architecture - Dense Captioning
 Another variant of the Object Detection approach is known as Dense Captioning. The idea is that a photo is often a rich collection of objects and activities at different positions within the picture.
 
 Hence it can represent not just a single caption but multiple captions for different regions of the image. This model helps it capture all of the detail within the image.
@@ -125,7 +125,18 @@ Beam Search is very effective and is widely used in many NLP applications. I hav
 If you are interested I encourage you to take a look.
 
 ## Bleu Score
+Once the caption is generated how do we decide how good it is? A common metric for evaluating Image Caption models is the Bleu Score. It is a popular metric for other NLP applications like translation and language models as well.
 
+It is a simple metric and measures the number of sequential words that match between the predicted and the ground truth caption. It compares n-grams of various lengths from 1 through 4 to do this.
+
+eg. Predicted Caption: "A dog stands on green grass"
+Ground Truth Caption: "The dog is standing on the grass"
+
+The predicted words that also occur in the true caption are "dog", "on" and "grass", out of a total of six predicted words.
+
+_Bleu Score for 1-gram = Correctly Predicted Words / Total predicted Words_
+
+_Bleu Score for 1-gram = 3/6 = 0.5_
 
 ## Conclusion
 With the advances made in Computer Vision and NLP, today's Image Captioning models are able to produce results that almost match human performance. When you input a photograph and get back a perfect human-readable caption, it almost feels like science fiction!
