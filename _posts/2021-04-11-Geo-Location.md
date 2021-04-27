@@ -5,7 +5,9 @@ categories: [ GeoLocation, tutorial ]
 image: https://images.unsplash.com/photo-1537429149818-2d0e3e20857b?w=600&q=60
 ---
 
-### A Gentle Guide to Geo Data, in Plain English
+### A Gentle Guide to Feature Engineering and Visualization with Geolocation Data, in Plain English
+
+Photo by [Daniel Olah](https://unsplash.com/) on [Unsplash](https://unsplash.com)
 
 Location data is an important category of data that you frequently have to deal with in many machine learning applications. Location data typically provides a lot of extra context to your application's data.
 
@@ -16,7 +18,7 @@ For instance, you might want to predict e-commerce sales projections based on yo
 In this article, my goal is to provide an overview of dealing with geolocation data for machine learning applications. This is a vast subject so I will try to give you a flavor of the issues involved. In future articles, I hope to dive deeper into some of those specific areas.
 
 ## Application Domain data (includes basic location information)
-As with all machine learning applications, we start with a dataset about the application domain. The key is that it also contains information to identify a physical location of interest, either in the form of an address or as geographical coordinates like latitude or longitude.
+As with all machine learning applications, we start with a dataset about the application domain. The key is that it also contains information to identify a physical location of interest, either in the form of an address or as geographical coordinates like latitude and longitude.
 
 Let's say that we were trying to predict real estate prices. Our dataset would normally consist of information about the house (its type, age, square footage, and so on), its price, and of course, its location. This is structured tabular data.
 
@@ -82,7 +84,7 @@ Geopandas can also conveniently load geospatial data from all of these different
 {% gist e5b60f030e6cdca0f8f919094b00b41d %}
 
 ## Pre-processing geodata (Coordinate Reference Systems)
-Our geodata contains (x, y) coordinates of geographical locations usually as latitude and longitude numbers. However, oddly enough, just by themselves, those coordinates cannot be uniquely mapped to an actual place in the real world.
+Our geodata contains (x, y) coordinates of geographical locations usually as latitude and longitude numbers. However, oddly enough, just by themselves, those coordinates cannot be mapped to a physical location.
 
 Those coordinates are just numbers in an arbitrary space. For them to uniquely map to an actual place in the real world, they must be associated with a coordinate system, known as a CRS.
 

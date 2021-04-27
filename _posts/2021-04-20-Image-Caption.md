@@ -2,10 +2,12 @@
 layout: post
 title: Image Captions with Deep Learning - State-of-the-Art Architectures
 categories: [ Vision, tutorial ]
-image: https://miro.medium.com/max/1000/0*NlO0vViTFWhERLds
+image: https://images.unsplash.com/photo-1555431189-0fabf2667795?w=1200
 ---
 
 ### A Gentle Guide to Image Feature Encoders, Sequence Decoders, Attention, and Multimodal Architectures, in Plain English
+
+Photo by [Brett Jordan](https://unsplash.com/@brett_jordan) on [Unsplash](https://unsplash.com)
 
 Image Captioning is a fascinating application of deep learning that has made tremendous progress in recent years. What makes it even more interesting is that it brings together both Computer Vision and NLP.
 
