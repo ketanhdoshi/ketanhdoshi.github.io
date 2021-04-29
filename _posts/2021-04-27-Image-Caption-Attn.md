@@ -164,7 +164,7 @@ We are now ready to create the training loop to train the model.
 We define the functions for the optimizer and loss. We train the model for several epochs, processing a batch of data in each iteration.
 
 https://gist.github.com/ketanhdoshi/048630adf88e9d1a805e88508425e7fb
-{% gist 2651e6245e0d1f042f5ae66ab22ec237 %}
+{% gist 048630adf88e9d1a805e88508425e7fb %}
 
 There is a lot happening during training, and the flow of computations can get a little confusing. So let's go through them step by step.
 
