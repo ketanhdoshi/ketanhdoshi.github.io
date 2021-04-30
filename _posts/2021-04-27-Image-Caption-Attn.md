@@ -78,6 +78,8 @@ Let's load the full dataset into a Python dictionary:
 https://gist.github.com/ketanhdoshi/7d575844fac274ba95b0e05f1f882c44
 {% gist 7d575844fac274ba95b0e05f1f882c44 %}
 
+![Dictionary (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-5.png)
+
 Then use the Training List text file to select the subset of images to be used for training from our full dataset.
 
 https://gist.github.com/ketanhdoshi/bd0142722df0e75ffd5acea5f2daae8a
