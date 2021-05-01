@@ -15,9 +15,9 @@ layout: default
                         </span>
 					</p>
 					<h1 class="display-4 mb-4 article-headline">{{ page.title }}</h1>
-					<h6 class="excerpt">
+					<h5 class="excerpt">
 						{{ page.subtitle | strip_html | strip_newlines | truncate: 136 }}
-					</h6>
+					</h5>
 					<div class="d-flex align-items-center">
                         {% if author.avatar %}
                         <img class="rounded-circle" src="{{site.baseurl}}/{{author.avatar}}" alt="{{author.name}}" width="70"/>
@@ -30,7 +30,7 @@ layout: default
                 {% if page.image %}
 				<div class="col-md-6 pr-0 align-self-center">
 					<img class="rounded" src="{% if page.image contains "://" %}{{ page.image }}{% else %}{{ site.baseurl }}/{{ page.image }}{% endif %}" alt="{{ page.title }}">
-					{% if page.imagecaption %} <figcaption>{{ page.imagecaption }}</figcaption> {% endif %}
+					{% if page.imagecaption %} <figcaption>{{ page.imagecaption | markdownify }}</figcaption> {% endif %}
 				</div>
                 {% endif %}
 			</div>
