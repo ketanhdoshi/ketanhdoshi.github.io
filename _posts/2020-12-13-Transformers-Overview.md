@@ -36,6 +36,13 @@ The Encoder stack and the Decoder stack each have their corresponding Embedding 
 [(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-1.png)
 {% include image.html url="/TransformerOverview/Arch-1.png" description="My cat, Robert Downey Jr." %}
 
+| ![space-1.jpg]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-1.png) | 
+|:--:| 
+| *My superb caption* |
+
+![]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-1.png)
+*Need to style the caption*
+
 All the Encoders are identical to one another. Similarly, all the Decoders are identical.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-2.png)
