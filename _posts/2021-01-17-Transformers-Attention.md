@@ -2,6 +2,8 @@
 layout: post
 title: Transformers Explained Visually (Part 3) - Multi-head Attention, deep dive
 categories: [ Transformers, tutorial ]
+author: ketan
+tags: [sticky]
 image: https://images.unsplash.com/photo-1583594122497-135b1bee3664?w=1200
 ---
 

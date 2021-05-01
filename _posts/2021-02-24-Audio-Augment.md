@@ -2,6 +2,7 @@
 layout: post
 title: Audio Deep Learning Made Simple (Part 3) - Data Preparation and Augmentation
 categories: [ Audio, tutorial ]
+author: ketan
 image: https://images.unsplash.com/photo-1521417170173-29cd2de82858?iw=1200
 ---
 

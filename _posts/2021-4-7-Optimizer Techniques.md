@@ -2,6 +2,7 @@
 layout: post
 title: Neural Network Optimizers Made Simple - Core algorithms and why they are needed
 categories: [ Optimizer, tutorial ]
+author: ketan
 image: https://images.unsplash.com/photo-1469559845082-95b66baaf023?w=1200
 ---
 

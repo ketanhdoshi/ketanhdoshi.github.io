@@ -2,6 +2,8 @@
 layout: post
 title: Audio Deep Learning Made Simple - Sound Classification, Step-by-Step
 categories: [ Audio, tutorial ]
+author: ketan
+tags: featured
 image: https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=1200
 ---
 

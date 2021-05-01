@@ -2,6 +2,7 @@
 layout: post
 title: Reinforcement Learning Made Simple (Part 2) Solution Approaches
 categories: [ Reinforcement Learning, tutorial ]
+author: ketan
 image: https://images.unsplash.com/photo-1508175800969-525c72a047dd?w=1200
 ---
 

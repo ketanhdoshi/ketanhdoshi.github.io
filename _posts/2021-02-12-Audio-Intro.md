@@ -2,6 +2,8 @@
 layout: post
 title: Audio Deep Learning Made Simple (Part 1) - State-of-the-Art Techniques
 categories: [ Audio, tutorial ]
+author: ketan
+tags: featured
 image: https://images.unsplash.com/photo-1453738773917-9c3eff1db985?w=1200
 ---
 

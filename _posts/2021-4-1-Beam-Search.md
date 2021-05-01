@@ -2,6 +2,8 @@
 layout: post
 title: Foundations of NLP Explained Visually - Beam Search, How It Works
 categories: [ NLP, tutorial ]
+author: ketan
+tags: featured
 image: https://images.unsplash.com/photo-1517297146180-10febdbce8b1?w=600
 ---
 

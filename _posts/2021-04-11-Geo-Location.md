@@ -2,6 +2,8 @@
 layout: post
 title: Leveraging GeoLocation Data with Machine Learning - Essential Techniques
 categories: [ GeoLocation, tutorial ]
+author: ketan
+tags: featured
 image: https://images.unsplash.com/photo-1537429149818-2d0e3e20857b?w=600&q=60
 ---
 

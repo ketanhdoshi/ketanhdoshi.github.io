@@ -2,6 +2,7 @@
 layout: post
 title: Reinforcement Learning Explained Visually (Part 5) - Deep Q Networks, step-by-step
 categories: [ Reinforcement Learning, tutorial ]
+author: ketan
 image: https://images.unsplash.com/photo-1530973428-5bf2db2e4d71?w=1200
 ---
 

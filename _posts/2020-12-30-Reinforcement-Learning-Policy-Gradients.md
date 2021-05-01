@@ -2,6 +2,7 @@
 layout: post
 title: Reinforcement Learning Explained Visually (Part 6) - Policy Gradients, step-by-step
 categories: [ Reinforcement Learning, tutorial ]
+author: ketan
 image: https://images.unsplash.com/photo-1589149098258-3e9102cd63d3?w=1000
 ---
 

@@ -2,6 +2,8 @@
 layout: post
 title: Transformers Explained Visually (Part 1) - Overview of Functionality
 categories: [ Transformers, tutorial ]
+author: ketan
+tags: featured
 image: https://images.unsplash.com/photo-1545548171-37a54e5c1ea6?w=1200
 ---
 

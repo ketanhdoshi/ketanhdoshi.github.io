@@ -2,6 +2,8 @@
 layout: post
 title: Transformers Explained Visually (Part 2) - How it works, step-by-step
 categories: [ Transformers, tutorial ]
+author: ketan
+tags: featured
 image: https://images.unsplash.com/photo-1488229297570-58520851e868?w=1200
 ---
 

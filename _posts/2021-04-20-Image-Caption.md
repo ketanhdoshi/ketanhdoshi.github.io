@@ -2,6 +2,7 @@
 layout: post
 title: Image Captions with Deep Learning - State-of-the-Art Architectures
 categories: [ Vision, tutorial ]
+author: ketan
 image: https://images.unsplash.com/photo-1555431189-0fabf2667795?w=1200
 ---
 

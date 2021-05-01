@@ -2,6 +2,7 @@
 layout: post
 title: Reinforcement Learning Explained Visually (Part 3) - Model-free solutions, step-by-step
 categories: [ Jekyll, tutorial ]
+author: ketan
 image: https://images.unsplash.com/photo-1592398191627-25b41eeaa398?w=1200
 ---
 

@@ -2,6 +2,8 @@
 layout: post
 title: Reinforcement Learning Made Simple (Part 1) - Intro to Basic Concepts and Terminology
 categories: [ Reinforcement Learning, tutorial ]
+author: ketan
+tags: featured
 image: https://images.unsplash.com/photo-1518878603059-096e7dfbbd6e?w=1200
 ---
 
