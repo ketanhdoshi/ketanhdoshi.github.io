@@ -19,9 +19,9 @@ Over a series of articles, I’ll go over the basics of Transformers, its archit
 
 Here’s a quick summary of the previous and following articles in the series. My goal throughout will be to understand not just how something works but why it works that way.
 
-1. **Overview of functionality** — this article (_How Transformers are used, and why they are better than RNNs. Components of the architecture, and behavior during Training and Inference_)
-2. **How it works** (_Internal operation end-to-end. How data flows and what computations are performed, including matrix representations_)
-3. **Multi-head Attention** (_Inner workings of the Attention module throughout the Transformer_)
+1. [**Overview of functionality**](https://ketanhdoshi.github.io/Transformers-Overview/) — this article (_How Transformers are used, and why they are better than RNNs. Components of the architecture, and behavior during Training and Inference_)
+2. [**How it works**](https://ketanhdoshi.github.io/Transformers-Arch/) (_Internal operation end-to-end. How data flows and what computations are performed, including matrix representations_)
+3. [**Multi-head Attention**](https://ketanhdoshi.github.io/Transformers-Attention/) (_Inner workings of the Attention module throughout the Transformer_)
 4. Why Attention Boosts Performance (_Not just what Attention does but why it works so well. How does Attention capture the relationships between words in a sentence_)
 
 ## What is a Transformer
