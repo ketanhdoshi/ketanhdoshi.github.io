@@ -15,9 +15,9 @@ layout: default
                         </span>
 					</p>
 					<h1 class="display-4 mb-4 article-headline">{{ page.title }}</h1>
-					<h4 class="excerpt">
+					<h6 class="excerpt">
 						{{ page.subtitle | strip_html | strip_newlines | truncate: 136 }}
-					</h4>
+					</h6>
 					<div class="d-flex align-items-center">
                         {% if author.avatar %}
                         <img class="rounded-circle" src="{{site.baseurl}}/{{author.avatar}}" alt="{{author.name}}" width="70"/>

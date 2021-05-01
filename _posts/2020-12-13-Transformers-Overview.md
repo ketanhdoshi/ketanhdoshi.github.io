@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Transformers Explained Visually (Part 1) - Overview of Functionality
-subtitle: A Gentle Guide to Transformers, how they are used for NLP, and why they are better than RNNs, in Plain English. How Attention helps improve performance.
+subtitle: A Gentle Guide to Transformers, how they are used for NLP, and why they are better than RNNs, in Plain English. h6.
 imagecaption: Photo by [Arseny Togulev](https://unsplash.com/@tetrakiss) on [Unsplash](https://unsplash.com)
 categories: [ Transformers, tutorial ]
 author: ketan
