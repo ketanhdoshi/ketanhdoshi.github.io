@@ -3,7 +3,7 @@ name: 'Mundana'
 description: 'Mundana is a free Jekyll theme for awesome people like you, Medium like.'
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/favicon.ico'
-baseurl: '/mundana-theme-jekyll'
+baseurl: ''
 disqus: 'demowebsite'
 email: 'wowthemesnet@gmail.com'
 mailchimp-list: 'https://wowthemes.us11.list-manage.com/subscribe/post?u=8aeb20a530e124561927d3bd8&amp;id=8c3d2d214b'
@@ -19,6 +19,14 @@ plugins:
   - jekyll-seo-tag
   
 authors:
+    ketan:
+      name:           Ketan Doshi
+      site:           https://www.wowthemes.net
+      avatar:         /assets/images/avatar/ProfilePic.jpg
+      bio:            "Hi, I am Ketan"
+      email:          fal_thu @ yahoo . com
+      twitter:        https://twitter.com/wowthemesnet
+
     sal:
       name:           Sal
       site:           https://www.wowthemes.net
