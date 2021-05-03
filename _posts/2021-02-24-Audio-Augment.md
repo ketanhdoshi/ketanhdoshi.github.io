@@ -1,14 +1,12 @@
 ---
 layout: post
 title: Audio Deep Learning Made Simple (Part 3) - Data Preparation and Augmentation
+subtitle: A Gentle Guide to enhancing Spectrogram features for optimal performance. Also Data Augmentation, in Plain English.
+imagecaption: Photo by [Vidar Nordli-Mathisen](https://unsplash.com/@vidarnm) on [Unsplash](https://unsplash.com)
 categories: [ Audio, tutorial ]
 author: ketan
 image: https://images.unsplash.com/photo-1521417170173-29cd2de82858?iw=1200
 ---
-
-#### A Gentle Guide to enhancing Spectrogram features for optimal performance. Also Data Augmentation, in Plain English.
-
-Photo by [Vidar Nordli-Mathisen](https://unsplash.com/@vidarnm) on [Unsplash](https://unsplash.com)
 
 This is the third article in my series on audio deep learning. So far we’ve learned how sound is represented digitally, and that deep learning architectures usually use a spectrogram of the sound. We’ve also seen how to pre-process audio data in Python to generate Mel Spectrograms.
 
@@ -16,11 +14,11 @@ In this article, we will take that a step further and enhance our Mel Spectrogra
 
 Here’s a quick summary of the articles I am planning in the series. My goal throughout will be to understand not just how something works but why it works that way.
 
-1. **State-of-the-Art Techniques** (_What is sound and how it is digitized. What problems is audio deep learning solving in our daily lives. What are Spectrograms and why they are all-important._)
-2. **Why Mel Spectrograms perform better** (_Processing audio data in Python. What are Mel Spectrograms and how to generate them_)
-3. **Feature Optimization and Augmentation** — this article (_Enhance Spectrograms features for optimal performance by hyper-parameter tuning and data augmentation_)
-4. **Audio Classification** (_End-to-end example and architecture to classify ordinary sounds. Foundational application for a range of scenarios._)
-5. **Automatic Speech Recognition** (_Speech-to-Text algorithm and architecture, using CTC Loss and Decoding for aligning sequences._)
+1. [**State-of-the-Art Techniques**](https://ketanhdoshi.github.io/Audio-Intro/) (_What is sound and how it is digitized. What problems is audio deep learning solving in our daily lives. What are Spectrograms and why they are all-important._)
+2. [**Why Mel Spectrograms perform better**](https://ketanhdoshi.github.io/Audio-Mel/) (_Processing audio data in Python. What are Mel Spectrograms and how to generate them_)
+3. [**Feature Optimization and Augmentation**](https://ketanhdoshi.github.io/Audio-Augment/) — this article (_Enhance Spectrograms features for optimal performance by hyper-parameter tuning and data augmentation_)
+4. [**Audio Classification**](https://ketanhdoshi.github.io/Audio-Classification/) (_End-to-end example and architecture to classify ordinary sounds. Foundational application for a range of scenarios._)
+5. [**Automatic Speech Recognition**](https://ketanhdoshi.github.io/Audio-ASR/) (_Speech-to-Text algorithm and architecture, using CTC Loss and Decoding for aligning sequences._)
 
 ## Spectrograms Optimization with Hyper-parameter tuning
 In Part 2 we learned what a Mel Spectrogram is and how to create one using some convenient library functions. But to really get the best performance for our deep learning models, we should optimize the Mel Spectrograms for the problem that we’re trying to solve.
@@ -35,7 +33,8 @@ However, the FFT will give you the overall frequency components for the entire t
 #### Short-time Fourier Transform (STFT)
 To get that more granular view and see the frequency variations over time, we use the STFT algorithm (Short-Time Fourier Transform). The STFT is another variant of the Fourier Transform that breaks up the audio signal into smaller sections by using a sliding time window. It takes the FFT on each section and then combines them. It is thus able to capture the variations of the frequency with time.
 
-![STFT slides an overlapping window along the signal and does a Fourier Transform on each segment (Source)]({{ site.baseurl }}/assets/images/AudioMel/STFT.png)
+![]({{ site.baseurl }}/assets/images/AudioMel/STFT.png)
+*STFT slides an overlapping window along the signal and does a Fourier Transform on each segment (Source)*
 
 This splits the signal into sections along the Time axis. Secondly, it also splits the signal into sections along the Frequency axis. It takes the full range of frequencies and divides it up into equally spaced bands (in the Mel scale). Then, for each section of time, it calculates the Amplitude or energy for each frequency band.
 
@@ -78,7 +77,8 @@ These essentially take Mel Spectrograms and apply a couple of further processing
 
 {% gist c088a74d249999d7c1ee04e9a45047b7 %}
 
-![MFCC generated from audio (Image by Author)]({{ site.baseurl }}/assets/images/AudioMel/MFCC.png)
+![]({{ site.baseurl }}/assets/images/AudioMel/MFCC.png)
+*MFCC generated from audio (Image by Author)*
 
 Above, we had seen that the Mel Spectrogram for this same audio had shape (128, 134), whereas the MFCC has shape (20, 134). The MFCC extracts a much smaller set of features from the audio that are the most relevant in capturing the essential quality of the sound.
 
@@ -99,7 +99,8 @@ Instead, we use a method known as SpecAugment where we block out sections of the
 - Frequency mask — randomly mask out a range of consecutive frequencies by adding horizontal bars on the spectrogram.
 - Time mask — similar to frequency masks, except that we randomly block out ranges of time from the spectrogram by using vertical bars.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/AudioMel/Augment-1.png)
+![]({{ site.baseurl }}/assets/images/AudioMel/Augment-1.png)
+*(Image by Author)*
 
 #### Raw Audio Augmentation
 There are several options:
@@ -108,21 +109,25 @@ Time Shift — shift audio to the left or the right by a random amount.
 
 - For sound such as traffic or sea waves which has no particular order, the audio could wrap around.
 
-![Augmentation by Time Shift (Image by Author)]({{ site.baseurl }}/assets/images/AudioMel/Augment-3.png)
+![]({{ site.baseurl }}/assets/images/AudioMel/Augment-3.png)
+*Augmentation by Time Shift (Image by Author)*
 
 - Alternately, for sounds such as human speech where the order does matter, the gaps can be filled with silence.
 
 Pitch Shift — randomly modify the frequency of parts of the sound.
 
-![Augmentation by Pitch Shift (Image by Author)]({{ site.baseurl }}/assets/images/AudioMel/Augment-4.png)
+![]({{ site.baseurl }}/assets/images/AudioMel/Augment-4.png)
+*Augmentation by Pitch Shift (Image by Author)*
 
 Time Stretch — randomly slow down or speed up the sound.
 
-![Augmentation by Time Stretch (Image by Author)]({{ site.baseurl }}/assets/images/AudioMel/Augment-5.png)
+![]({{ site.baseurl }}/assets/images/AudioMel/Augment-5.png)
+*Augmentation by Time Stretch (Image by Author)*
 
 Add Noise — add some random values to the sound.
 
-![Augmentation by Adding Noise (Image by Author)]({{ site.baseurl }}/assets/images/AudioMel/Augment-2.png)
+![]({{ site.baseurl }}/assets/images/AudioMel/Augment-2.png)
+*Augmentation by Adding Noise (Image by Author)*
 
 ## Conclusion
 We have now seen how we pre-process and prepare audio data for input to deep learning models. These approaches are commonly applied for a majority of audio applications.
@@ -130,5 +135,9 @@ We have now seen how we pre-process and prepare audio data for input to deep lea
 We are now ready to explore some real deep learning applications and will cover an Audio Classification example in the next article, where we’ll see these techniques in action.
 
 And finally, if you liked this article, you might also enjoy my other series on Transformers as well as Reinforcement Learning.
+
+[Transformers Explained Visually: Overview of functionality](https://ketanhdoshi.github.io/Transformers-Overview/)
+
+[Reinforcement Learning Made Simple (Part 1): Intro to Basic Concepts and Terminology](https://ketanhdoshi.github.io/Reinforcement-Learning-Intro/)
 
 Let's keep learning!
