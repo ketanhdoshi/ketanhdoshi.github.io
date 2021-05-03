@@ -1,25 +1,23 @@
 ---
 layout: post
-title: Reinforcement Learning Made Simple (Part 2) Solution Approaches
+title: Reinforcement Learning Made Simple - Solution Approaches
+subtitle: A Gentle Overview of RL solutions, and how to categorize them. Important takeaways from the Bellman equation, in Plain English.
+imagecaption: Photo by [Dominik Scythe](https://unsplash.com/@drscythe) on [Unsplash](https://unsplash.com)
 categories: [ Reinforcement Learning, tutorial ]
 author: ketan
 image: https://images.unsplash.com/photo-1508175800969-525c72a047dd?w=1200
 ---
 
-#### A Gentle Overview of RL solutions, and how to categorize them. Important takeaways from the Bellman equation, in Plain English
-
-Photo by [Dominik Scythe](https://unsplash.com/@drscythe) on [Unsplash](https://unsplash.com)
-
 This is the second article in my series on Reinforcement Learning (RL). Now that we understand what an RL Problem is, let’s look at the approaches used to solve it.
 
 Here’s a quick summary of the previous and following articles in the series. My goal throughout will be to understand not just how something works but why it works that way.
 
-1. **Intro to Basic Concepts and Terminology** — this article (_What is an RL problem, and how to apply an RL problem-solving framework to it using techniques from Markov Decision Processes and concepts such as Return, Value, and Policy_)
-2. **Solution Approaches** (_Overview of popular RL solutions, and categorizing them based on the relationship between these solutions. Important takeaways from the Bellman equation, which is the foundation for all RL algorithms._)
-3. **Model-free algorithms** (_Similarities and differences of Value-based and Policy-based solutions using an iterative algorithm to incrementally improve predictions. Exploitation, Exploration, and ε-greedy policies._)
-4. **Q-Learning** (_In-depth analysis of this algorithm, which is the basis for subsequent deep-learning approaches. Develop intuition about why this algorithm converges to the optimal values._)
-5. **Deep Q Networks** (_Our first deep-learning algorithm. A step-by-step walkthrough of exactly how it works, and why those architectural choices were made._)
-6. **Policy Gradient** (_Our first policy-based deep-learning algorithm._)
+1. [**Intro to Basic Concepts and Terminology**](https://ketanhdoshi.github.io/Reinforcement-Learning-Intro/) (_What is an RL problem, and how to apply an RL problem-solving framework to it using techniques from Markov Decision Processes and concepts such as Return, Value, and Policy_)
+2. [**Solution Approaches**](https://ketanhdoshi.github.io/Reinforcement-Learning-Solutions/) — this article (_Overview of popular RL solutions, and categorizing them based on the relationship between these solutions. Important takeaways from the Bellman equation, which is the foundation for all RL algorithms._)
+3. [**Model-free algorithms**](https://ketanhdoshi.github.io/Reinforcement-Learning-Model/) (_Similarities and differences of Value-based and Policy-based solutions using an iterative algorithm to incrementally improve predictions. Exploitation, Exploration, and ε-greedy policies._)
+4. [**Q-Learning**](https://ketanhdoshi.github.io/Reinforcement-Learning-Q-Learning/) (_In-depth analysis of this algorithm, which is the basis for subsequent deep-learning approaches. Develop intuition about why this algorithm converges to the optimal values._)
+5. [**Deep Q Networks**](https://ketanhdoshi.github.io/Reinforcement-Learning-Deep-Q-Network/) (_Our first deep-learning algorithm. A step-by-step walkthrough of exactly how it works, and why those architectural choices were made._)
+6. [**Policy Gradient**](https://ketanhdoshi.github.io/Reinforcement-Learning-Policy-Gradients/) (_Our first policy-based deep-learning algorithm._)
 7. Actor-Critic (_Sophisticated deep-learning algorithm which combines the best of Deep Q Networks and Policy Gradients._)
 
 ## RL Solution Categories
@@ -32,18 +30,21 @@ Very broadly, solutions are either:
 
 Model-based approaches are used when the internal operation of the environment is known. In other words, we can reliably say what Next State and Reward will be output by the environment when some Action is performed from some Current State.
 
-![Model-based: Internal operation of the environment is known (Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Approach-1.jpg)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Approach-1.jpg)
+*Model-based: Internal operation of the environment is known (Image by Author)*
 
 Model-free approaches are used when the environment is very complex and its internal dynamics are not known. They treat the environment as a black-box.
 
-![Model-free: Environment is a black box (Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Approach-2.jpg)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Approach-2.jpg)
+*Model-free: Environment is a black box (Image by Author)*
 
 #### Prediction vs Control
 Another high-level distinction is between Prediction and Control.
 
 With a Prediction problem, we are given a Policy as input, and the goal is to output the corresponding Value function. This could be any Policy, not necessarily an Optimal Policy.
 
-![Prediction vs Control problems (Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Approach-3.jpg)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Approach-3.jpg)
+*Prediction vs Control problems (Image by Author)*
 
 With a Control problem, no input is provided, and the goal is to explore the policy space and find the Optimal Policy.
 
@@ -52,7 +53,8 @@ Most practical problems are Control problems, as our goal is to find the Optimal
 #### Classifying Popular RL Algorithms
 The most common RL Algorithms can be categorized as below:
 
-![Taxonomy of well-known RL Solutions (Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Approach-4.jpg)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Approach-4.jpg)
+*Taxonomy of well-known RL Solutions (Image by Author)*
 
 Most interesting real-world RL problems are model-free control problems. So we will not explore model-based solutions further in this series other than briefly touching on them below. Everything we discuss from here on pertains only to model-free control solutions.
 
@@ -71,14 +73,16 @@ Since the internal operation of the environment is invisible to us, how does the
 
 We learn how it behaves by interacting with it, one action at a time. The algorithm acts as the agent, takes an action, observes the next state and reward, and repeats.
 
-![Model-free algorithms learn about the environment by interacting with it, one action at a time. (Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Interact-1.png)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Interact-1.png)
+*Model-free algorithms learn about the environment by interacting with it, one action at a time. (Image by Author)*
 
 The agent acquires experience through trial and error. It tries steps and receives positive or negative feedback. This is much the same as a human would learn.
 
 #### Trajectory of interactions
 As the agent takes each step, it follows a path (ie. trajectory).
 
-![A trajectory of interactions (Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Interact-2.png)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Interact-2.png)
+*A trajectory of interactions (Image by Author)*
 
 The agent’s trajectory becomes the algorithm’s ‘training data’.
 
@@ -92,32 +96,38 @@ This relationship is the foundation for all the RL algorithms. This equation has
 #### Work back from a Terminal State (makes it easier to understand)
 Consider the reward by taking an action from a state to reach a terminal state.
 
-![Reward when reaching a terminal state (Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-1.jpg)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-1.jpg)
+*Reward when reaching a terminal state (Image by Author)*
 
 The return from that state is the same as the reward obtained by taking that action. Remember that Reward is obtained for a single action, while Return is the cumulative discounted reward obtained from that state onward (till the end of the episode).
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-2.jpg)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-2.jpg)
+*(Image by Author)*
 
 Now consider the previous state S6. The return from S6 is the reward obtained by taking the action to reach S7 plus any discounted return that we would obtain from S7. The important thing is that we no longer need to know the details of the individual steps taken beyond S7.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-3.jpg)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-3.jpg)
+*(Image by Author)*
 
 #### Bellman Equation for Return
 In general, the return from any state can be decomposed into two parts — the immediate reward from the action to reach the next state, plus the Discounted Return from that next state by following the same policy for all subsequent steps. This recursive relationship is known as the Bellman Equation.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-4.jpg)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-4.jpg)
+*(Image by Author)*
 
 #### Bellman Equation for State Value
 Return is the discounted reward for a single path. State Value is obtained by taking the average of the Return over many paths (ie. the Expectation of the Return).
 
 So State Value can be similarly decomposed into two parts — the immediate reward from the next action to reach the next state, plus the Discounted Value of that next state by following the policy for all subsequent steps.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-5.jpg)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-5.jpg)
+*(Image by Author)*
 
 #### Bellman Equation for State-Action Value
 Similarly, the State-Action Value can be decomposed into two parts — the immediate reward from that action to reach the next state, plus the Discounted Value of that next state by following the policy for all subsequent steps.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-6.png)
+![]({{ site.baseurl }}/assets/images/RLSolutions/Bellman-6.png)
+*(Image by Author)*
 
 ## Why is the Bellman Equation useful?
 There are two key observations that we can make from the Bellman Equation.
@@ -144,4 +154,10 @@ Hang on to both these ideas because all the RL algorithms will make use of them.
 Now that we have an overall idea about what an RL problem is, and the broad landscape of approaches used to solve them, we are ready to go deeper into the techniques used to solve them. Since real-world problems are most commonly tackled with model-free approaches, that is what we will focus on. They will be the topic of the next article.
 
 And finally, if you liked this article, you might also enjoy my other series on Transformers as well as Audio Deep Learning.
+
+[Transformers Explained Visually - Overview of functionality](https://ketanhdoshi.github.io/Transformers-Overview/)
+
+[Audio Deep Learning Made Simple - State-of-the-Art Techniques](https://ketanhdoshi.github.io/Audio-Intro/)
+
+Let's keep learning!
 

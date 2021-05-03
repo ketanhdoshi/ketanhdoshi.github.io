@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Audio Deep Learning Made Simple (Part 3) - Data Preparation and Augmentation
+title: Audio Deep Learning Made Simple - Data Preparation and Augmentation
 subtitle: A Gentle Guide to enhancing Spectrogram features for optimal performance. Also Data Augmentation, in Plain English.
 imagecaption: Photo by [Vidar Nordli-Mathisen](https://unsplash.com/@vidarnm) on [Unsplash](https://unsplash.com)
 categories: [ Audio, tutorial ]

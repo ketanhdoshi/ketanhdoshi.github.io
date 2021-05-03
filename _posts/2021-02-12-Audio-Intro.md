@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Audio Deep Learning Made Simple (Part 1) - State-of-the-Art Techniques
+title: Audio Deep Learning Made Simple - State-of-the-Art Techniques
 subtitle: A Gentle Guide to the world of disruptive deep learning audio applications and architectures. And why we all need to know about Spectrograms, in Plain English.
 imagecaption: Photo by [Jason Rosewell](https://unsplash.com/@jasonrosewell) on [Unsplash](https://unsplash.com)
 categories: [ Audio, tutorial ]

@@ -1,15 +1,13 @@
 ---
 layout: post
-title: Reinforcement Learning Made Simple (Part 1) - Intro to Basic Concepts and Terminology
+title: Reinforcement Learning Made Simple - Intro to Basic Concepts and Terminology
+subtitle: A Gentle Guide to applying Markov Decision Processes, in Plain English.
+imagecaption: Photo by [Philippe Murray-Pietsch](https://unsplash.com/@pmpietsch) on [Unsplash](https://unsplash.com)
 categories: [ Reinforcement Learning, tutorial ]
 author: ketan
 tags: featured
 image: https://images.unsplash.com/photo-1518878603059-096e7dfbbd6e?w=1200
 ---
-
-#### A Gentle Guide to applying Markov Decision Processes, in Plain English
-
-Photo by [Philippe Murray-Pietsch](https://unsplash.com/@pmpietsch) on [Unsplash](https://unsplash.com)
 
 You’ve probably started hearing a lot more about Reinforcement Learning in the last few years, ever since the AlphaGo model, which was trained using reinforcement-learning, stunned the world by beating the then reigning world champion at the complex game of Go.
 
@@ -17,19 +15,20 @@ Over a series of articles, I’ll go over the basics of Reinforcement Learning (
 
 Here’s a quick summary of the articles in the series. My goal throughout will be to understand not just how something works but why it works that way.
 
-1. **Intro to Basic Concepts and Terminology** — this article (_What is an RL problem, and how to apply an RL problem-solving framework to it using techniques from Markov Decision Processes and concepts such as Return, Value, and Policy_)
-2. **Solution Approaches** (_Overview of popular RL solutions, and categorizing them based on the relationship between these solutions. Important takeaways from the Bellman equation, which is the foundation for all RL algorithms._)
-3. **Model-free algorithms** (_Similarities and differences of Value-based and Policy-based solutions using an iterative algorithm to incrementally improve predictions. Exploitation, Exploration, and ε-greedy policies._)
-4. **Q-Learning** (_In-depth analysis of this algorithm, which is the basis for subsequent deep-learning approaches. Develop intuition about why this algorithm converges to the optimal values._)
-5. **Deep Q Networks** (_Our first deep-learning algorithm. A step-by-step walkthrough of exactly how it works, and why those architectural choices were made._)
-6. **Policy Gradient** (_Our first policy-based deep-learning algorithm._)
+1. [**Intro to Basic Concepts and Terminology**](https://ketanhdoshi.github.io/Reinforcement-Learning-Intro/) — this article (_What is an RL problem, and how to apply an RL problem-solving framework to it using techniques from Markov Decision Processes and concepts such as Return, Value, and Policy_)
+2. [**Solution Approaches**](https://ketanhdoshi.github.io/Reinforcement-Learning-Solutions/) (_Overview of popular RL solutions, and categorizing them based on the relationship between these solutions. Important takeaways from the Bellman equation, which is the foundation for all RL algorithms._)
+3. [**Model-free algorithms**](https://ketanhdoshi.github.io/Reinforcement-Learning-Model/) (_Similarities and differences of Value-based and Policy-based solutions using an iterative algorithm to incrementally improve predictions. Exploitation, Exploration, and ε-greedy policies._)
+4. [**Q-Learning**](https://ketanhdoshi.github.io/Reinforcement-Learning-Q-Learning/) (_In-depth analysis of this algorithm, which is the basis for subsequent deep-learning approaches. Develop intuition about why this algorithm converges to the optimal values._)
+5. [**Deep Q Networks**](https://ketanhdoshi.github.io/Reinforcement-Learning-Deep-Q-Network/) (_Our first deep-learning algorithm. A step-by-step walkthrough of exactly how it works, and why those architectural choices were made._)
+6. [**Policy Gradient**](https://ketanhdoshi.github.io/Reinforcement-Learning-Policy-Gradients/) (_Our first policy-based deep-learning algorithm._)
 7. Actor-Critic (_Sophisticated deep-learning algorithm which combines the best of Deep Q Networks and Policy Gradients._)
 
 ## Overview of RL
 #### Where does RL fit in the world of Machine Learning?
 Typically when people provide an overview of ML, the first thing they explain is that it can be divided into two categories, Supervised Learning and Unsupervised Learning. However, there is a third category, viz. RL although it isn’t mentioned as often as its two more glamorous siblings.
 
-![Machine Learning can be categorized as Supervised Learning, Unsupervised Learning and Reinforcement Learning (Image by Author)](https://miro.medium.com/max/1000/1*q2KLOWGHaUGXEbiXw4hqpw.png)
+![]({{ site.baseurl }}/assets/images/RLIntro/ML%20Categories.jpg)
+*Machine Learning can be categorized as Supervised Learning, Unsupervised Learning and Reinforcement Learning (Image by Author)*
 
 Supervised Learning uses labeled data as input, and predicts outcomes. It receives feedback from a Loss function acting as a ‘supervisor’.
 
@@ -58,7 +57,8 @@ With RL the learning happens from experience by trial and error, similar to a hu
 - Receives feedback from the environment about the result of that action
 - Repeats this process till it learns which actions produce favorable results and which actions produce unfavorable results.
 
-![A baby learns from positive and negative reinforcement (Image by Author)](https://miro.medium.com/max/633/1*FtPbdWC3I9_hoJPkuXyOFw.png)
+![]({{ site.baseurl }}/assets/images/RLIntro/Learn%20Experience.jpg)
+*A baby learns from positive and negative reinforcement (Image by Author)*
 
 ## To use RL, structure your problem as a Markov Decision Process
 Let’s say you want to train a robot. How would you use RL to solve a problem like this?
@@ -71,7 +71,8 @@ So let’s try to understand what an MDP is. An MDP has five components that wor
 
 **Environment**: the real-world environment with which the agent interacts as part of its operation. eg. The terrain that the robot has to navigate, its surroundings, factors such as wind, friction, lighting, temperature and so on.
 
-![An MDP has an Agent, Environment, States, Actions and Rewards (Image by Author)](https://miro.medium.com/max/557/1*SUh9EkOGbPYnq0QS_xvUPg.jpeg)
+![]({{ site.baseurl }}/assets/images/RLIntro/MDP.jpg)
+*An MDP has an Agent, Environment, States, Actions and Rewards (Image by Author)*
 
 **State**: this represents the current ‘state of the world’ at any point. eg. it could capture the position of the robot relative to its terrain, the position of objects around it, and perhaps the direction and speed of the wind.
 
@@ -101,7 +102,8 @@ In other words, the definition of the state should be self-contained. So, for in
 ## How does an MDP work?
 Now that we’ve seen what an MDP is, we’ll go into how it works. Let’s use the game of Tic-Tac-Toe (aka Noughts and Crosses) as a simple example. Two players play this game by placing their tokens on a 3x3 grid. One player places Noughts (the donut-shape) while the other places Crosses. The objective is to win the game by placing three of your tokens in a line.
 
-![(Image by Author)](https://miro.medium.com/max/242/1*0aVO0LNoVC2p2vqYgeogAA.jpeg)
+![]({{ site.baseurl }}/assets/images/RLIntro/TicTacToe.jpg)
+*(Image by Author)*
 
 #### You can define your MDP as follows:
 - The agent plays against the environment, so the environment acts as its opponent.
@@ -114,7 +116,8 @@ The agent interacts with its environment over a sequence of time-steps. A set fl
 
 The sequence starts with an initial state, which becomes the current state. For instance, your opponent, the environment has placed their token in a particular position, and that is the starting state for the game.
 
-![How the MDP works (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/MDP%20Operation.png)
+![]({{ site.baseurl }}/assets/images/RLIntro/MDP%20Operation.png)
+*How the MDP works (Image by Author)*
 
 Now, starting with the first time-step, the following steps occur at each time-step:
 1. The environment’s current state is input to the agent.
@@ -129,7 +132,8 @@ Throughout this process, it is the agent’s goal to maximize the total amount o
 ## An MDP iterates over a sequence of time-steps
 Here is another view of the MDP’s operation which shows the progression of time-steps.
 
-![An MDP iterates over a sequence of time steps (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Episode.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Episode.jpg)
+*An MDP iterates over a sequence of time steps (Image by Author)*
 
 In each time-step, three things occur — state, action and reward, which fully describe what happened in that time-step.
 
@@ -144,7 +148,8 @@ For RL tasks that have a well-defined end or Terminal state, a complete sequence
 
 Therefore an RL system’s operation repeats over multiple episodes. Within each episode, it repeats over multiple time-steps.
 
-![Each Episode ends in a Terminal State (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Terminal.png)
+![]({{ site.baseurl }}/assets/images/RLIntro/Terminal.png)
+*Each Episode ends in a Terminal State (Image by Author)*
 
 #### Continuing Tasks go on forever
 On the other hand, RL tasks which have no end are known as Continuing Tasks, and can go on forever (or till you stop the system). Eg. A robot that continuously manages manufacturing or warehouse automation.
@@ -152,7 +157,8 @@ On the other hand, RL tasks which have no end are known as Continuing Tasks, and
 ## Agent and Environment control the state-action transitions
 As we just saw, the MDP operates by alternating between the agent doing something and then the environment doing something, in each time-step:
 
-![Given a state, the Agent decides the action. Given an action (and state), the Environment decides the next state. (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Transition.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Transition.jpg)
+*Given a state, the Agent decides the action. Given an action (and state), the Environment decides the next state. (Image by Author)*
 
 - Given the current state, the next action is decided by the agent. In fact, that is the only job of the agent. For instance, from the current state, the agent can choose, say, action _a₁_ or _a₂_ to place its token.
 - Given the current state, and the next action chosen by the agent, the transition to the next state and the reward is controlled by the environment. For instance, if the agent had chosen action _a₁_, the environment could transition to state _S₂_ or _S₃_ by playing different moves. Another video game example could be that starting from a given state (eg. character is standing on a roof), the same agent action (character jumps) could with some probability, end up in more than one next state (eg. land on a neighboring roof, or fall to the ground), as controlled by the environment.
@@ -170,7 +176,8 @@ Note that this external black box might be a simulator for the environment. In m
 
 However, just for completeness, let me briefly mention that if we did build such an environment model, an MDP would represent it as a large transition probability matrix or function.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Model%20Transition.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Model%20Transition.jpg)
+*(Image by Author)*
 
 This matrix maps a given state and action pair to:
 
@@ -191,7 +198,8 @@ However, rather than any individual reward, what we really care about is the cum
 
 We call this the Return. It is the total reward that the agent accumulates over the duration of a task.
 
-![The Return is the total of the rewards received at each time-step (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Return.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Return.jpg)
+*The Return is the total of the rewards received at each time-step (Image by Author)*
 
 #### Return is computed using Discounted Rewards
 When we calculate Return, rather than simply adding up all the rewards, we apply a discount factor γ to weight later rewards over time. These are known as Discounted Rewards.
@@ -213,12 +221,14 @@ Based on this discount, we can see that there are two factors the agent consider
 #### Immediate Reward is more valuable than Later Reward
 The first point is that if the agent had to choose between getting some amount of reward now versus later, the immediate reward is more valuable. Since the discount factor, γ, is less than 1, we will discount later rewards more than immediate rewards.
 
-![Immediate Reward is more valuable than Later Reward (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Immediate%20Reward.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Immediate%20Reward.jpg)
+*Immediate Reward is more valuable than Later Reward (Image by Author)*
 
 #### Rewards that give us the highest Total Returns are better
 The second point is that if the agent had to choose between getting some reward now versus getting a much bigger reward later, the bigger reward is most likely preferable. This is because we want the agent to look at total Returns rather than individual rewards. eg. In a game of chess, the agent has to pick the better of two paths. In the first, it can kill off a few pieces early on by playing aggressively. That gives it some immediate reward. However in the long run that puts it in a disadvantaged position, and it loses the game. Hence it gets a large negative reward at the end. Alternately it can play a different set of moves which yields lower rewards at first but where it ultimately wins the game. And thus gets a large positive reward. Clearly, the second approach is better since it gives a higher total Return as opposed to a bigger immediate reward.
 
-![We want to get a higher Total Reward (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/TotalReward.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/TotalReward.jpg)
+*We want to get a higher Total Reward (Image by Author)*
 
 ## Policy is the strategy followed to pick an action
 The second concept for us to cover is Policy. Earlier we had deferred one very important question, which was, how the agent decides which action to pick in a given state. There can be many different strategies that an agent might use:
@@ -230,16 +240,19 @@ The second concept for us to cover is Policy. Earlier we had deferred one very i
 
 Any strategy that the agent follows to decide which action to pick in a given state, is called a Policy. Although that sounds abstract, a Policy is simply something that maps a given state to an action to be taken.
 
-![The Policy tells the Agent which action to pick from any state (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Policy.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Policy.jpg)
+*The Policy tells the Agent which action to pick from any state (Image by Author)*
 
 #### Policy is like a (huge) Lookup Table
 You could think of a Policy as a (huge) Lookup Table which maps a state to an action.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Stochastic%20Table.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Stochastic%20Table.jpg)
+*(Image by Author)*
 
 So given the current state, the agent looks up that state in the table to find the action that it should pick.
 
-![The Policy is like a (huge) Lookup Table (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Policy%20Table.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Policy%20Table.jpg)
+*The Policy is like a (huge) Lookup Table (Image by Author)*
 
 In practice, for real-world problems, there are so many states and so many actions, that a function is used, not a Lookup Table, that maps a state to an action.
 
@@ -250,13 +263,15 @@ Policies can be either Deterministic or Stochastic.
 
 A Deterministic Policy is a Policy where the agent always chooses the same fixed action when it reaches a particular state.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Deterministic.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Deterministic.jpg)
+*(Image by Author)*
 
 Alternately, a Stochastic Policy is a Policy where the agent varies the actions it chooses for a state, based on some probability for each action.
 
 It might do this while playing a game, for instance, so that it doesn’t become completely predictable. Eg while playing Rock Paper Scissors, if it always played the same move, opponents can figure this out and easily defeat it.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Stochastic.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Stochastic.jpg)
+*(Image by Author)*
 
 #### How does the agent get a Policy?
 We’ve been talking about the Policy as though the agent already had one readily available for it to use. But that is not really the case.
@@ -280,7 +295,8 @@ This is the same as saying, if the agent starts from that state, and always pick
 
 This average long-term Return, or expected Return, is known as the Value of that particular state, under policy π.
 
-![The State Value (V) or the State-Action Value (Q) is the expected Return obtained from a particular state or state-action respectively, by following the given Policy over many episodes (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Value.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Value.jpg)
+*The State Value (V) or the State-Action Value (Q) is the expected Return obtained from a particular state or state-action respectively, by following the given Policy over many episodes (Image by Author)*
 
 Alternately, the agent could start from a state-action pair ie. it has already taken a particular action from a particular state. If going forward from that state-action, it always picks actions based on the given policy π, what is the Return it could expect to get?
 
@@ -289,11 +305,13 @@ As discussed earlier for the Policy Table, we can think of Value as a (huge) Loo
 Thus we have two types of Value:
 - State Value — the expected Return from a given state, by executing actions based on a given policy π from that state onward. In other words, the State Value function maps a State to its Value.
 
-![The State Value Function maps a State to its Value (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/State%20Value%20Table.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/State%20Value%20Table.jpg)
+*The State Value Function maps a State to its Value (Image by Author)*
 
 - State-Action Value (aka Q-Value) — the expected Return by taking a given action from a given state, and then, by executing actions based on a given policy π after that. In other words, the State-Action Value function maps a State-Action pair to its Value.
 
-![The State-Action Value Function maps a State-Action pair to its Value (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/State%20Action%20Value%20Table.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/State%20Action%20Value%20Table.jpg)
+*The State-Action Value Function maps a State-Action pair to its Value (Image by Author)*
 
 #### Relationship between Reward, Return and Value
 - Reward is the immediate reward obtained for a single action.
@@ -320,7 +338,8 @@ Now that we understand Value, let’s go back to our earlier discussion about co
 
 Given two policies, we can determine the corresponding State-Value or State-Action Value functions for each of those policies, by following the policy and evaluating the Returns.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Compare%20Policy.jpg)
+![]({{ site.baseurl }}/assets/images/RLIntro/Compare%20Policy.jpg)
+*(Image by Author)*
 
 Once we have the respective Value Functions, we can use those Value Functions to compare the policies. The policy, whose Value Function is higher, is better because that means it will yield higher Returns.
 
@@ -329,7 +348,8 @@ Since we can now compare policies to figure out which ones are 'good' and which 
 
 The Optimal Policy is the policy that will yield more Returns to the agent than all other policies.
 
-![The Optimal Policy is the one that is better than all other policies (Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/Optimal%20Policy.png)
+![]({{ site.baseurl }}/assets/images/RLIntro/Optimal%20Policy.png)
+*The Optimal Policy is the one that is better than all other policies (Image by Author)*
 
 ## Solve the RL Problem by Finding the Optimal Policy
 So now we have the approach to solve an RL problem.
@@ -340,8 +360,15 @@ In other words, we need to find the Optimal Policy for the agent. Once it has th
 
 We will apply a Reinforcement Learning algorithm to build an agent model and train it to find the Optimal Policy. Finding the Optimal Policy essentially solves the RL problem.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/RLIntro/RL%20Process.png)
+![]({{ site.baseurl }}/assets/images/RLIntro/RL%20Process.png)
+*(Image by Author)*
 
 In the next article in this series, we will look at the solution approach used by these RL algorithms.
 
 And finally, if you liked this article, you might also enjoy my other series on Transformers as well as Audio Deep Learning.
+
+[Transformers Explained Visually - Overview of functionality](https://ketanhdoshi.github.io/Transformers-Overview/)
+
+[Audio Deep Learning Made Simple - State-of-the-Art Techniques](https://ketanhdoshi.github.io/Audio-Intro/)
+
+Let's keep learning!

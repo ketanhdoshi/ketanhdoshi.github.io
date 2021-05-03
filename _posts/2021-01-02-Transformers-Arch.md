@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Transformers Explained Visually (Part 2) - How it works, step-by-step
+title: Transformers Explained Visually - How it works, step-by-step
 subtitle: A Gentle Guide to the Transformer under the hood, and its end-to-end operation.
 imagecaption: Photo by [Joshua Sortino](https://unsplash.com/@sortino) on [Unsplash](https://unsplash.com)
 categories: [ Transformers, tutorial ]

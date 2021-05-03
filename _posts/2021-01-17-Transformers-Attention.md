@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Transformers Explained Visually (Part 3) - Multi-head Attention, deep dive
+title: Transformers Explained Visually - Multi-head Attention, deep dive
 subtitle: A Gentle Guide to the inner workings of Self-Attention, Encoder-Decoder Attention, Attention Score and Masking, in Plain English.
 imagecaption: Photo by [Scott Tobin](https://unsplash.com/@scottywatty) on [Unsplash](https://unsplash.com)
 categories: [ Transformers, tutorial ]
