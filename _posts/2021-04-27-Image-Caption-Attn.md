@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Image Captions with Attention using Tensorflow 2.0, Step-by-step
+title: Image Captions with Attention in Tensorflow, Step-by-step
+subtitle: An end-to-end example using Encoder-Decoder with Attention in Keras and Tensorflow 2.0, in Plain English
+imagecaption: Photo by [Max Kleinen](https://unsplash.com/@hirmin) on [Unsplash](https://unsplash.com) 
 categories: [ Vision, tutorial ]
 author: ketan
 tags: featured
-image: https://miro.medium.com/max/1000/0*NlO0vViTFWhERLds
+image: https://images.unsplash.com/photo-1571156425562-12341e7c9aae?w=1200
 ---
-
-### A Gentle Guide to , in Plain English
 
 Generating Image Captions using deep learning has produced remarkable results in recent years. One of the most widely-used architectures was presented in the [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) paper. 
 
@@ -15,20 +15,23 @@ The innovation that it introduced was to apply Attention, which has seen much su
 
 In this article, we will walk through a simple demo application to understand how this architecture works in detail.
 
-I have another article that provides an overview of many popular Image Caption architectures. It provides the background about the main components used by these architectures, explains the unique characteristics of each architecture and why they are interesting. I encourage you to take a look if you're interested.
+I have another [article](https://ketanhdoshi.github.io/Image-Caption/) that provides an overview of many popular Image Caption architectures. It provides the background about the main components used by these architectures, explains the unique characteristics of each architecture and why they are interesting. I encourage you to take a look if you're interested.
 
 ## Image Captioning Application
 An Image Captioning application takes an image as input and produces a short textual summary describing the content of the photo.
 
-![Image Caption application (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/App-1.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/App-1.png)
+*(Image by Author)*
 
 For our application, we start with image files as input and extract their essential features in a compact encoded representation. We will input these to a Sequence Decoder, consisting of several LSTM layers, which will decode the encoded image and predict a sequence of words that describes the photo.
 
-![Image Caption application flow (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Flow-1.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Flow-1.png)
+*(Image by Author)*
 
 As for most deep learning problems, we will follow these steps:
 
-![Image Caption application flow (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Flow-2.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Flow-2.png)
+*(Image by Author)*
 
 ## Image Caption Dataset
 There are some well-known datasets that are commonly used for this type of problem. These datasets contain a set of image files and a text file that maps each image file to one or more captions. Each caption is a sentence of words in a language.
@@ -49,12 +52,14 @@ eg. "_1000268201_693b08cb0e.jpg#1	A girl going into a wooden building ._"
 
 Here is what one image with its five captions looks like:
 
-![Image Caption example (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-1.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-1.png)
+*Image Caption example (Image by Author)*
 
 ## Training data pipeline
 We will build the pipeline for our deep learning architecture in two phases.
 
-![Deep Learning Workflow (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Flow-3.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Flow-3.png)
+*(Image by Author)*
 
 - For the first phase, we use transfer learning to pre-process the raw images with a pre-trained CNN-based network. This takes the images as input and produces the encoded image vectors that capture the essential features of the image. We do not need to train this network further.
 - We then input these encoded image features, rather than the raw images themselves, to our Image Caption model. We also pass in the target captions corresponding to each encoded image. The model decodes the image features and learns to predict captions that match the target captions. 
@@ -65,7 +70,8 @@ For the Image Caption model, the training data consists of:
 
 To prepare the training data in this format, we will use the following steps:
 
-![Deep Learning Workflow (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-2.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-2.png)
+*(Image by Author)*
 
 - Load the Image and Caption data
 - Pre-process Images
@@ -80,7 +86,8 @@ Let's load the full dataset into a Python dictionary:
 https://gist.github.com/ketanhdoshi/7d575844fac274ba95b0e05f1f882c44
 {% gist 7d575844fac274ba95b0e05f1f882c44 %}
 
-![Dictionary (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-5.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-5.png)
+*(Image by Author)*
 
 Then use the Training List text file to select the subset of images to be used for training from our full dataset.
 
@@ -94,13 +101,15 @@ We will use a pre-trained Inception model which is a well-known Image Classifica
 
 For our Image Caption model, we need only the image feature maps, and do not need the Classifier.
 
-![Deep Learning Workflow (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Arch-1.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Arch-1.png)
+*(Image by Author)*
 
 We download this pre-trained model, truncate the Classifier section and encode the training images. The model returns a vector of shape (8, 8, 2048), which we reshape to (64, 2048).
 
 The features for each encoded image are saved in a separate file using the image name and another extension eg. '_1000268201_693b08cb0e.npy_'
 
-![Deep Learning Workflow (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-3.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-3.png)
+*(Image by Author)*
 
 https://gist.github.com/ketanhdoshi/05e99b29dcbc1d674ebd321aafcd4b05
 {% gist 05e99b29dcbc1d674ebd321aafcd4b05 %}
@@ -110,7 +119,8 @@ Now that the images are ready for training, we have to prepare the captions data
 ## Prepare Captions
 Each caption consists of an English sentence. To prepare this for training, we perform the following steps on each sentence:
 
-![Deep Learning Workflow (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-4.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-4.png)
+*(Image by Author)*
 
 - Clean it by converting all words to lower case and removing punctuation, words with numbers and short words with a single character.
 - Add '&lt;startseq&gt;' and '&lt;endseq&gt;' tokens at the beginning and end of the sentence.
@@ -174,7 +184,8 @@ https://gist.github.com/ketanhdoshi/048630adf88e9d1a805e88508425e7fb
 
 There is a lot happening during training, and the flow of computations can get a little confusing. So let's go through them step by step.
 
-![Deep Learning Workflow (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Arch-2.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Arch-2.png)
+*(Image by Author)*
 
 In each epoch, the training loop performs several operations:
 
@@ -217,7 +228,7 @@ We extract image features from the test image using the pre-trained model. The n
 https://gist.github.com/ketanhdoshi/990b5127e62933e39ab401d7f20b8d7d
 {% gist 990b5127e62933e39ab401d7f20b8d7d %}
 
-![Inference (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-7.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-7.png)
 
 Real Caption: 'person is rock climbing between two large rock faces'
 Prediction Caption: person climbs rock to big rock endseq

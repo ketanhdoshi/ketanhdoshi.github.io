@@ -1,14 +1,12 @@
 ---
 layout: post
 title: Neural Network Optimizers Made Simple - Core algorithms and why they are needed
+subtitle: A Gentle Guide to fundamental techniques used by gradient descent optimizers like SGD, Momentum, RMSProp, Adam, and others, in plain English.
+imagecaption: Photo by [George Stackpole](https://unsplash.com/@stacksvrollin) on [Unsplash](https://unsplash.com) 
 categories: [ Optimizer, tutorial ]
 author: ketan
 image: https://images.unsplash.com/photo-1469559845082-95b66baaf023?w=1200
 ---
-
-#### A Gentle Guide to fundamental techniques used by gradient descent optimizers like SGD, Momentum, RMSProp, Adam, and others, in plain English.
-
-Photo by [George Stackpole](https://unsplash.com/@stacksvrollin) on [Unsplash](https://unsplash.com)
 
 Optimizers are a critical component of a Neural Network architecture. During training, they play a key role in helping the network learn to make better and better predictions.
 
@@ -27,7 +25,8 @@ Before we are ready to dive into the maths, my goal with this article is to prov
 #### Loss Curve
 Let’s start with a typical 3D picture of the gradient descent algorithm at work.
 
-![Loss curve for Gradient Descent (Source)](https://upload.wikimedia.org/wikipedia/commons/5/5b/Gradient_descent_method.png)
+![](https://upload.wikimedia.org/wikipedia/commons/5/5b/Gradient_descent_method.png)
+*Loss curve for Gradient Descent [(Source)](https://upload.wikimedia.org/wikipedia/commons/5/5b/Gradient_descent_method.png)*
 
 This picture shows a network with two weight parameters:
 - The horizontal plane has two axes, for weights w1 and w2 respectively.
@@ -44,18 +43,21 @@ The blue line plots the trajectory of the gradient descent algorithm during opti
 #### Computing the Gradient
 The algorithm updates weights based on the gradient of the loss curve at that point, and a learning rate factor.
 
-![Gradient Descent parameter update (Image by Author)]({{ site.baseurl }}/assets/images/OptimizerTechniques/Gradient%20Descent-1.png)
+![]({{ site.baseurl }}/assets/images/OptimizerTechniques/Gradient%20Descent-1.png)
+*Gradient Descent parameter update (Image by Author)*
 
 The gradient measures the slope and is the change in the vertical direction ( _dL_) divided by the change in the horizontal direction (_dW_). This means that the gradient is large for steep slopes and small for gentle slopes.
 
-![Computing the Gradient (Image by Author)]({{ site.baseurl }}/assets/images/OptimizerTechniques/Gradient%20Descent-2.png)
+![]({{ site.baseurl }}/assets/images/OptimizerTechniques/Gradient%20Descent-2.png)
+*Computing the Gradient (Image by Author)*
 
 #### Gradient Descent in Practice
 These loss curves are a useful visualization to understand the concept of gradient descent. However, we should realize that this is an idealized scenario, not a realistic one:
 
 - The picture above shows a smooth convex-shaped curve. In reality, the curve is very bumpy.
     
-![A neural network loss landscape (Source, by permission of Hao Li)]({{ site.baseurl }}/assets/images/OptimizerTechniques/Landscape-1.png)
+![]({{ site.baseurl }}/assets/images/OptimizerTechniques/Landscape-1.png)
+*A neural network loss landscape [(Source](https://arxiv.org/pdf/1712.09913.pdf), by permission of Hao Li)*
 
 - Secondly, we are not going to have just 2 parameters. There are often tens or hundreds of millions, and it is impossible to visualize or even imagine that in your head.
 
@@ -71,12 +73,14 @@ These are some examples of curves that pose difficulties for it. Let’s look at
 #### Local Minima
 In a typical loss curve, you might have many local minima in addition to the global minimum. Because Gradient Descent is designed to keep going downwards, once it goes down a local minimum, it finds it very difficult to climb back up the slope. So it might get stuck there without reaching the global minimum.
 
-![Local minima and Global minimum (Source)]({{ site.baseurl }}/assets/images/OptimizerTechniques/Gradient%20Descent-4.png)
+![]({{ site.baseurl }}/assets/images/OptimizerTechniques/Gradient%20Descent-4.png)
+*Local minima and Global minimum [(Source)](https://upload.wikimedia.org/wikipedia/commons/6/68/Extrema_example_original.svg)*
 
 #### Saddle Points
 Another key challenge is the occurrence of “saddle points”. This is a point where, in one direction corresponding to one parameter, the curve is at a local minimum. On the other hand, in a second direction corresponding to another parameter, the curve is at a local maximum.
 
-![Saddle Point (Source)](https://upload.wikimedia.org/wikipedia/commons/4/40/Saddle_point.png)
+![](https://upload.wikimedia.org/wikipedia/commons/4/40/Saddle_point.png)
+*Saddle Point [(Source)](https://upload.wikimedia.org/wikipedia/commons/4/40/Saddle_point.png)*
 
 What makes saddle points tricky, is that the area immediately around the saddle point is usually fairly flat, like a plateau. This means that the gradients are close to zero. This causes the optimizer to oscillate around the saddle point, in the direction of the first parameter, without being able to descend down the slope in the direction of the second parameter.
 
@@ -85,7 +89,8 @@ The gradient descent thus incorrectly assumes that it has found the minimum.
 #### Ravines
 Gradient Descent also finds it hard to traverse ravines. This is a long narrow valley that slopes steeply in one direction (ie. the sides of the valley) and gently (ie. along the valley) in the second direction. Often this ravine leads down to the minimum. Because it is difficult to navigate, this shape is also called Pathological Curvature.
 
-![Ravines (Modified from Source, by permission of James Martens)]({{ site.baseurl }}/assets/images/OptimizerTechniques/Gradient%20Descent-3.png)
+![]({{ site.baseurl }}/assets/images/OptimizerTechniques/Gradient%20Descent-3.png)
+*Ravines (Modified from [Source](https://icml.cc/Conferences/2010/papers/458.pdf), by permission of James Martens)*
 
 Think of this like a narrow river valley that slopes down gently from the hills till it ends in a lake. What you want to do is move quickly downriver in the direction of the valley. However, it is very easy for gradient descent to bounce back and forth along the sides of the valley and move very slowly in the direction of the river.
 
@@ -106,7 +111,8 @@ So even though you get stuck at someplace in the landscape in one mini-batch, yo
 #### Adjust the Update Amount dynamically
 One of the tricky aspects of Gradient Descent is dealing with steep slopes. Because the gradient is large there, you could take a large step when you actually want to go slowly and cautiously. This could result in bouncing back and forth, thus slowing down the training.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/OptimizerTechniques/Momentum-1.png)
+![]({{ site.baseurl }}/assets/images/OptimizerTechniques/Momentum-1.png)
+*(Image by Author)*
 
 Ideally, you want to vary the magnitude of the update dynamically so you can respond to changes in the landscape around you. If the slope is very steep you want to slow down. If the slope is very flat you might want to speed up and so on.
 
@@ -130,7 +136,8 @@ The Momentum algorithm uses the exponential moving average of the gradient, inst
 
 Momentum helps you tackle the narrow ravine problem of pathological curvature, where the gradient is very high for one weight parameter but very low for another parameter.
 
-![Momentum helps you traverse ravines (Modified from Source, by permission of James Martens)]({{ site.baseurl }}/assets/images/OptimizerTechniques/Momentum-2.png)
+![]({{ site.baseurl }}/assets/images/OptimizerTechniques/Momentum-2.png)
+*Momentum helps you traverse ravines (Modified from [Source](https://icml.cc/Conferences/2010/papers/458.pdf), by permission of James Martens)*
 
 By using momentum, you dampen the zig-zag oscillations that would happen with SGD.
 
