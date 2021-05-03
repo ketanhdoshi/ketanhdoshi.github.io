@@ -9,10 +9,6 @@ tags: featured
 image: https://images.unsplash.com/photo-1545548171-37a54e5c1ea6?w=1200
 ---
 
-#### A Gentle Guide to Transformers, how they are used for NLP, and why they are better than RNNs, in Plain English. How Attention helps improve performance.
-
-Photo by [Arseny Togulev](https://unsplash.com/@tetrakiss) on [Unsplash](https://unsplash.com)
-
 We’ve been hearing a lot about Transformers and with good reason. They have taken the world of NLP by storm in the last few years. The Transformer is an architecture that uses Attention to significantly improve the performance of deep learning NLP translation models. It was first introduced in the paper Attention is all you need and was quickly established as the leading architecture for most text data applications.
 
 Since then, numerous projects including Google’s BERT and OpenAI’s GPT series have built on this foundation and published performance results that handily beat existing state-of-the-art benchmarks.
@@ -35,15 +31,8 @@ At its core, it contains a stack of Encoder layers and Decoder layers. To avoid 
 
 The Encoder stack and the Decoder stack each have their corresponding Embedding layers for their respective inputs. Finally, there is an Output layer to generate the final output.
 
-[(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-1.png)
-{% include image.html url="/TransformerOverview/Arch-1.png" description="My cat, *[Arseny Togulev](https://unsplash.com/@tetrakiss) on [Unsplash](https://unsplash.com).*" %}
-
-| ![space-1.jpg]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-1.png) | 
-|:--:| 
-| *My superb caption [Arseny Togulev](https://unsplash.com/@tetrakiss)* on [Unsplash](https://unsplash.com)|
-
-![]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-1.png)
-*Need to style the caption [Arseny Togulev](https://unsplash.com/@tetrakiss)*
+[]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-1.png)
+*(Image by Author)*
 
 All the Encoders are identical to one another. Similarly, all the Decoders are identical.
 
