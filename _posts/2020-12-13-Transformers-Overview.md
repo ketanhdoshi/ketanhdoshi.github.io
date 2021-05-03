@@ -31,7 +31,7 @@ At its core, it contains a stack of Encoder layers and Decoder layers. To avoid 
 
 The Encoder stack and the Decoder stack each have their corresponding Embedding layers for their respective inputs. Finally, there is an Output layer to generate the final output.
 
-[]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-1.png)
+![]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-1.png)
 *(Image by Author)*
 
 All the Encoders are identical to one another. Similarly, all the Decoders are identical.
