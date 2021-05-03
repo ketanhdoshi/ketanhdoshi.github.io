@@ -36,13 +36,12 @@ layout: default
 </div>
 
 
-
-
+<h4 class="excerpt">
+	{{ page.subtitle | strip_html | strip_newlines | truncate: 136 }}
+</h4>
 
 <div class="container-lg pt-4 pb-4">
 	<div class="row justify-content-center">
-        
-        
         <!-- Share -->
 		<div class="col-lg-2 pr-4 mb-4 col-md-12">
 			<div class="sticky-top sticky-top-offset text-center">
@@ -65,10 +64,6 @@ layout: default
         
 		<div class="col-md-12 col-lg-8">
             
-			<h4 class="excerpt">
-				{{ page.subtitle | strip_html | strip_newlines | truncate: 136 }}
-			</h4>
-
             <!-- Article -->
 			<article class="article-post">                
 			{{ content }}                
