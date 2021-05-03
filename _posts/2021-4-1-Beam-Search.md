@@ -1,15 +1,13 @@
 ---
 layout: post
 title: Foundations of NLP Explained Visually - Beam Search, How It Works
+subtitle: A gentle guide to how Beam Search enhances predictions, in plain English
+imagecaption: Photo by [Casey Horner](https://unsplash.com/@mischievous_penguins) on [Unsplash](https://unsplash.com)
 categories: [ NLP, tutorial ]
 author: ketan
 tags: featured
 image: https://images.unsplash.com/photo-1517297146180-10febdbce8b1?w=600
 ---
-
-#### A gentle guide to how Beam Search enhances predictions, in plain English
-
-Photo by [Casey Horner](https://unsplash.com/@mischievous_penguins) on [Unsplash](https://unsplash.com)
 
 Many NLP applications such as machine translation, chatbots, text summarization, and language models generate some text as their output. In addition applications like image captioning or automatic speech recognition (ie. Speech-to-Text) output text, even though they may not be considered pure NLP applications.
 
@@ -22,9 +20,9 @@ In this article, I will explore Beam Search and explain why it is used and how i
 
 Also, if you are interested in NLP, I have a few more articles that you might find useful. They explore other fascinating topics in this space such as Transformers and Speech-to-Text.
 
-1.  [Transformers Explained Visually: Overview of functionality](https://towardsdatascience.com/transformers-explained-visually-part-1-overview-of-functionality-95a6dd460452) _(How Transformers are used, and why they are better than RNNs. Components of the architecture, and behavior during Training and Inference)_
-2.  [How Transformers work, step-by-step](https://towardsdatascience.com/transformers-explained-visually-part-2-how-it-works-step-by-step-b49fa4a64f34) _(Internal operation end-to-end. How data flows and what computations are performed, including matrix representations)_
-3.  [Automatic Speech Recognition](https://towardsdatascience.com/audio-deep-learning-made-simple-automatic-speech-recognition-asr-how-it-works-716cfce4c706) _(Speech-to-Text algorithm and architecture, using CTC Loss and Decoding for aligning sequences.)_
+1.  [Transformers Explained Visually: Overview of functionality](https://ketanhdoshi.github.io/Transformers-Overview/) _(How Transformers are used, and why they are better than RNNs. Components of the architecture, and behavior during Training and Inference)_
+2.  [How Transformers work, step-by-step](https://ketanhdoshi.github.io/Transformers-Arch/) _(Internal operation end-to-end. How data flows and what computations are performed, including matrix representations)_
+3.  [Automatic Speech Recognition](https://ketanhdoshi.github.io/Audio-ASR/) _(Speech-to-Text algorithm and architecture, using CTC Loss and Decoding for aligning sequences.)_
 
 We’ll start by getting some context regarding how NLP models generate their output so that we can understand where Beam Search (and Greedy Search) fits in.
 
@@ -34,7 +32,8 @@ NB: Depending on the problem they’re solving, NLP models can generate output a
 
 Let’s take a sequence-to-sequence model as an example. These models are frequently used for applications such as machine translation.
 
-![Sequence-to-Sequence Model for Machine Translation (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Seq-Seq.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Seq-Seq.png)
+*Sequence-to-Sequence Model for Machine Translation (Image by Author)*
 
 For instance, if this model were being used to translate from English to Spanish, it would take a sentence in the source language (eg. “You are welcome” in English) as input and output the equivalent sentence in the target language (eg. “De nada” in Spanish).
 
@@ -46,11 +45,13 @@ This representation is then fed to a Decoder along with a “&lt;START&gt;” to
 
 This is then passed through an output layer, which might consist of some Linear layers followed by a Softmax. The Linear layers output a score of the likelihood of occurrence of each word in the vocabulary, at each position in the output sequence. The Softmax then converts those scores into probabilities.
 
-![Probabilities for each character in the vocabulary, for each position in the output sequence (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Pred-1.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Pred-1.png)
+*Probabilities for each character in the vocabulary, for each position in the output sequence (Image by Author)*
 
 Our eventual goal, of course, is not these probabilities but a final target sentence. To get that, the model has to decide which word it should predict for each position in that target sequence.
 
-![The model predicts an output sentence based on the probabilities (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Pred-2.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Pred-2.png)
+*The model predicts an output sentence based on the probabilities (Image by Author)*
 
 How does it do that?
 
@@ -58,7 +59,8 @@ How does it do that?
 
 A fairly obvious way is to simply take the word that has the highest probability at each position and predict that. It is quick to compute and easy to understand, and often does produce the correct result.
 
-![Greedy Search (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Greedy.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Greedy.png)
+*Greedy Search (Image by Author)*
 
 In fact, Greedy Search is so easy to understand, that we don’t need to spend more time explaining it 😃. But can we do better?
 
@@ -79,7 +81,8 @@ Intuitively it makes sense that this gives us better results over Greedy Search.
 
 Let’s take a simple example with a Beam width of 2, and using characters to keep it simple.
 
-![Beam Search example, with width = 2 (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Beam-1.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Beam-1.png)
+*Beam Search example, with width = 2 (Image by Author)*
 
 **First Position**
 
@@ -107,7 +110,8 @@ We now understand Beam Search at a conceptual level. Let’s go one level deeper
 
 Continuing with our sequence-to-sequence model, the Encoder and Decoder would likely be a recurrent network consisting of some LSTM layers. Alternately it could also be built using Transformers rather than a recurrent network.
 
-![An LSTM-based Sequence-to-Sequence model (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Seq-Seq-2.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Seq-Seq-2.png)
+*An LSTM-based Sequence-to-Sequence model (Image by Author)*
 
 Let’s focus on the Decoder component and the output layers.
 
@@ -115,7 +119,8 @@ Let’s focus on the Decoder component and the output layers.
 
 In the first timestep, it uses the Encoder’s output and an input of a “&lt;START&gt;” token to generate the character probabilities for the first position.
 
-![Character probabilities for the first position (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Seq-Seq-3.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Seq-Seq-3.png)
+*Character probabilities for the first position (Image by Author)*
 
 Now it picks two characters with the highest probability eg. “A” and “C”.
 
@@ -123,29 +128,35 @@ Now it picks two characters with the highest probability eg. “A” and “C”
 
 For the second timestep, it then runs the Decoder twice using the Encoder’s output as before. Along with the “&lt;START&gt;” token in the first position, it forces the input of the second position to be “A” in the first Decoder run. In the second Decoder run, it forces the input of the second position to be “C”.
 
-![Character probabilities for the second position (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Beam-2.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Beam-2.png)
+*Character probabilities for the second position (Image by Author)*
 
 It generates character probabilities for the second position. But these are individual character probabilities. It needs to compute the combined probabilities for character pairs in the first two positions. The probability of the pair “AB” is the probability of “A” occurring in the first position multiplied by the probability of “B” occurring in the second position, given that “A” is already fixed in the first position. The example below shows the calculation.
 
-![Calculate probabilities for character-pairs in the first two positions (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Beam-7.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Beam-7.png)
+*Calculate probabilities for character-pairs in the first two positions (Image by Author)*
 
 It does this for both Decoder runs and picks the character pairs with the highest combined probabilities across both runs. It, therefore, picks “AB” and “AE”.
 
-![The model picks the two best character pairs based on the combined probability (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Beam-3.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Beam-3.png)
+*The model picks the two best character pairs based on the combined probability (Image by Author)*
 
 **Third Position**
 
 For the third time step, it again runs the Decoder twice as before. Along with the “&lt;START&gt;” token in the first position, it forces the input of the second position and third positions to be “A” and “B” respectively in the first Decoder run. In the second Decoder run, it forces the input of the second position and third positions to be “A” and “E” respectively.
 
-![Character probabilities for the third position (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Beam-4.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Beam-4.png)
+*Character probabilities for the third position (Image by Author)*
 
 It calculates the combined probability for character triples in the first three positions.
 
-![Calculate probabilities for character-triples in the first three positions (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Beam-5.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Beam-5.png)
+*Calculate probabilities for character-triples in the first three positions (Image by Author)*
 
 It picks the two best ones across both runs, and therefore picks “ABC” and “AED”.
 
-![The model picks the two best character triples based on the combined probability (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Beam-6.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Beam-6.png)
+*The model picks the two best character triples based on the combined probability (Image by Author)*
 
 **Repeat till END token**
 
@@ -159,8 +170,8 @@ This gives us a sense of what Beam Search does, how it works, and why it gives u
 
 And finally, if you liked this article, you might also enjoy my other series on Audio Deep Learning and Reinforcement Learning.
 
-[Audio Deep Learning Made Simple (Part 1): State-of-the-Art Techniques](https://towardsdatascience.com/audio-deep-learning-made-simple-part-1-state-of-the-art-techniques-da1d3dff2504)
+[Audio Deep Learning Made Simple (Part 1): State-of-the-Art Techniques](https://ketanhdoshi.github.io/Audio-Intro/)
 
-[Reinforcement Learning Made Simple (Part 1): Intro to Basic Concepts and Terminology](https://towardsdatascience.com/reinforcement-learning-made-simple-part-1-intro-to-basic-concepts-and-terminology-1d2a87aa060)
+[Reinforcement Learning Made Simple (Part 1): Intro to Basic Concepts and Terminology](https://ketanhdoshi.github.io/Reinforcement-Learning-Intro/)
 
 Let’s keep learning!

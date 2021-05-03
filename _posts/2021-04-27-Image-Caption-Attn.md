@@ -53,7 +53,6 @@ eg. "_1000268201_693b08cb0e.jpg#1	A girl going into a wooden building ._"
 Here is what one image with its five captions looks like:
 
 ![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-1.png)
-*Image Caption example (Image by Author)*
 
 ## Training data pipeline
 We will build the pipeline for our deep learning architecture in two phases.
@@ -83,7 +82,6 @@ Now, let's go through these steps in more detail.
 ## Load Images and Captions
 Let's load the full dataset into a Python dictionary:
 
-https://gist.github.com/ketanhdoshi/7d575844fac274ba95b0e05f1f882c44
 {% gist 7d575844fac274ba95b0e05f1f882c44 %}
 
 ![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-5.png)
@@ -91,7 +89,6 @@ https://gist.github.com/ketanhdoshi/7d575844fac274ba95b0e05f1f882c44
 
 Then use the Training List text file to select the subset of images to be used for training from our full dataset.
 
-https://gist.github.com/ketanhdoshi/bd0142722df0e75ffd5acea5f2daae8a
 {% gist bd0142722df0e75ffd5acea5f2daae8a %}
 
 ## Pre-process Images
@@ -111,7 +108,6 @@ The features for each encoded image are saved in a separate file using the image
 ![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-3.png)
 *(Image by Author)*
 
-https://gist.github.com/ketanhdoshi/05e99b29dcbc1d674ebd321aafcd4b05
 {% gist 05e99b29dcbc1d674ebd321aafcd4b05 %}
 
 Now that the images are ready for training, we have to prepare the captions data next.
@@ -127,7 +123,6 @@ Each caption consists of an English sentence. To prepare this for training, we p
 - Tokenize the sentence by mapping each word to a numeric word ID. It does this by building a vocabulary of all the words that occur in the set of captions.
 - Extend each sentence to the same length by appending padding tokens. This is needed because the model expects every data sample to have the same fixed length.
 
-https://gist.github.com/ketanhdoshi/031eb7c279c60e760c349e779163765f
 {% gist 031eb7c279c60e760c349e779163765f %}
 
 ## Prepare Training Data using a Tensorflow Dataset
@@ -135,7 +130,6 @@ We now have pre-processed images and captions. We go through every training imag
 - **Features (X)** consisting of the image file paths
 - **Targets (y)** consisting of the cleaned and tokenized captions
 
-https://gist.github.com/ketanhdoshi/16e5edbdd0638560eced71327339d613
 {% gist 16e5edbdd0638560eced71327339d613 %}
 
 We wrap the training data in a Tensorflow Dataset object so that it can be efficiently fetched and fed, one batch at a time, to the model during training. The data is fetched lazily so that it doesn't all have to be in memory at the same time. This allows us to support very large datasets.
@@ -144,7 +138,6 @@ The dataset loads the pre-processed encoded image vectors that were saved earlie
 
 Much of the code for this example has been taken from the Tensorflow Image Caption [tutorial](https://www.tensorflow.org/tutorials/text/image_captioning).
 
-https://gist.github.com/ketanhdoshi/b9e165ecbd3dd94f9bff9dfd588e8a11
 {% gist b9e165ecbd3dd94f9bff9dfd588e8a11 %}
 
 ## Image Caption Model with Attention
@@ -154,7 +147,6 @@ The model consists of four logical components:
 - **Attention**: as the Decoder generates each word of the output sequence, the Attention module helps it to focus on the most relevant part of the image for generating that word.
 - **Sentence Generator**: this module consists of a couple of Linear layers. It takes the output from the Decoder and produces a probability for each word from the vocabulary, for each position in the predicted sequence.
 
-https://gist.github.com/ketanhdoshi/2651e6245e0d1f042f5ae66ab22ec237
 {% gist 2651e6245e0d1f042f5ae66ab22ec237 %}
 
 ## How does Attention enhance the Image Caption performance
@@ -179,7 +171,6 @@ We are now ready to create the training loop to train the model.
 
 We define the functions for the optimizer and loss. We train the model for several epochs, processing a batch of data in each iteration.
 
-https://gist.github.com/ketanhdoshi/048630adf88e9d1a805e88508425e7fb
 {% gist 048630adf88e9d1a805e88508425e7fb %}
 
 There is a lot happening during training, and the flow of computations can get a little confusing. So let's go through them step by step.
@@ -225,7 +216,6 @@ We extract image features from the test image using the pre-trained model. The n
 
 - And obviously, we don't calculate the loss and gradients, and don't do backpropagation.
 
-https://gist.github.com/ketanhdoshi/990b5127e62933e39ab401d7f20b8d7d
 {% gist 990b5127e62933e39ab401d7f20b8d7d %}
 
 ![]({{ site.baseurl }}/assets/images/ImageCaptionAttn/Data-7.png)

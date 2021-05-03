@@ -1,15 +1,13 @@
 ---
 layout: post
 title: Audio Deep Learning Made Simple - Sound Classification, Step-by-Step
+subtitle: An end-to-end example and architecture for audio deep learning’s foundational application scenario, in plain English.
+imagecaption: Photo by [bruce mars](https://unsplash.com/@brucemars) on [Unsplash](https://unsplash.com)
 categories: [ Audio, tutorial ]
 author: ketan
 tags: featured
 image: https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=1200
 ---
-
-#### An end-to-end example and architecture for audio deep learning’s foundational application scenario, in plain English.
-
-Photo by [bruce mars](https://unsplash.com/@brucemars) on [Unsplash](https://unsplash.com)
 
 Sound Classification is one of the most widely used applications in Audio Deep Learning. It involves learning to classify sounds and to predict the category of that sound. This type of problem can be applied to many practical scenarios e.g. classifying music clips to identify the genre of the music, or classifying short utterances by a set of speakers to identify the speaker based on the voice.
 
@@ -17,18 +15,19 @@ In this article, we will walk through a simple demo application so as to underst
 
 I have a few more articles in my audio deep learning series that you might find useful. They explore other fascinating topics in this space including how we prepare audio data for deep learning, why we use Mel Spectrograms for deep learning models and how they are generated and optimized.
 
-1. **State-of-the-Art Techniques** (_What is sound and how it is digitized. What problems is audio deep learning solving in our daily lives. What are Spectrograms and why they are all-important._)
-2. **Why Mel Spectrograms perform better** (_Processing audio data in Python. What are Mel Spectrograms and how to generate them_)
-3. **Feature Optimization and Augmentation** (_Enhance Spectrograms features for optimal performance by hyper-parameter tuning and data augmentation_)
-4. **Audio Classification** — this article (_End-to-end example and architecture to classify ordinary sounds. Foundational application for a range of scenarios._)
-5. **Automatic Speech Recognition** (_Speech-to-Text algorithm and architecture, using CTC Loss and Decoding for aligning sequences._)
+1. [**State-of-the-Art Techniques**](https://ketanhdoshi.github.io/Audio-Intro/) (_What is sound and how it is digitized. What problems is audio deep learning solving in our daily lives. What are Spectrograms and why they are all-important._)
+2. [**Why Mel Spectrograms perform better**](https://ketanhdoshi.github.io/Audio-Mel/) (_Processing audio data in Python. What are Mel Spectrograms and how to generate them_)
+3. [**Feature Optimization and Augmentation**](https://ketanhdoshi.github.io/Audio-Augment/) (_Enhance Spectrograms features for optimal performance by hyper-parameter tuning and data augmentation_)
+4. [**Audio Classification**](https://ketanhdoshi.github.io/Audio-Classification/) — this article (_End-to-end example and architecture to classify ordinary sounds. Foundational application for a range of scenarios._)
+5. [**Automatic Speech Recognition**](https://ketanhdoshi.github.io/Audio-ASR/) (_Speech-to-Text algorithm and architecture, using CTC Loss and Decoding for aligning sequences._)
 
 ## Audio Classification
 Just like classifying hand-written digits using the MNIST dataset is considered a ‘Hello World”-type problem for Computer Vision, we can think of this application as the introductory problem for audio deep learning.
 
 We will start with sound files, convert them into spectrograms, input them into a CNN plus Linear Classifier model, and produce predictions about the class to which the sound belongs.
 
-![Audio Classification application (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/Flow-4.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/Flow-4.png)
+*Audio Classification application (Image by Author)*
 
 There are many suitable datasets available for sounds of different types. These datasets contain a large number of audio samples, along with a class label for each sample that identifies what type of sound it is, based on the problem you are trying to address.
 
@@ -45,16 +44,19 @@ After downloading the dataset, we see that it consists of two parts:
 
 The samples are around 4 seconds in length. Here’s what one sample looks like:
 
-![An audio sample of a drill (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/Sample-1.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/Sample-1.png)
+*An audio sample of a drill (Image by Author)*
 
-![Sample Rate, Number of Channels, Bits, and Audio Encoding]({{ site.baseurl }}/assets/images/AudioClassification/Sample-2.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/Sample-2.png)
+*Sample Rate, Number of Channels, Bits, and Audio Encoding*
 
 The recommendation of the dataset creators is to use the folds for doing 10-fold cross-validation to report metrics and evaluate the performance of your model. However, since our goal in this article is primarily as a demo of an audio deep learning example rather than to obtain the best metrics, we will ignore the folds and treat all the samples simply as one large dataset.
 
 ## Prepare training data
 As for most deep learning problems, we will follow these steps:
 
-![Deep Learning Workflow (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/Flow-1.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/Flow-1.png)
+*Deep Learning Workflow (Image by Author)*
 
 The training data for this problem will be fairly simple:
 - The features (X) are the audio file paths
@@ -70,14 +72,16 @@ Since it is a CSV file, we can use Pandas to read it. We can prepare the feature
 
 This gives us the information we need for our training data.
 
-![Training data with audio file paths and class IDs]({{ site.baseurl }}/assets/images/AudioClassification/metadata-2.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/metadata-2.png)
+*Training data with audio file paths and class IDs*
 
 #### Scan the audio file directory when metadata isn’t available
 Having the metadata file made things easy for us. How would we prepare our data for datasets that do not contain a metadata file?
 
 Many datasets consist of only audio files arranged in a folder structure from which class labels can be derived. To prepare our training data in this format, we would do the following:
 
-![Preparing Training Data when metadata isn’t available (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/Flow-2.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/Flow-2.png)
+*Preparing Training Data when metadata isn’t available (Image by Author)*
 
 - Scan the directory and prepare a list of all the audio file paths.
 - Extract the class label from each file name, or from the name of the parent sub-folder
@@ -96,14 +100,16 @@ With image data, we might have a pipeline of transforms where we first read the 
 
 The processing for audio data is very similar. Right now we’re only defining the functions, they will be run a little later when we feed data to the model during training.
 
-![Pre-processing the training data for input to our model (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/Flow-3.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/Flow-3.png)
+*Pre-processing the training data for input to our model (Image by Author)*
 
 #### Read audio from a file
 The first thing we need is to read and load the audio file in “.wav” format. Since we are using Pytorch for this example, the implementation below uses torchaudio for the audio processing, but librosa will work just as well.
 
 {% gist 9de725d230d6602aa5742f1f78c03c9b %}
 
-![Audio wave loaded from a file (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/transform-1.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/transform-1.png)
+*Audio wave loaded from a file (Image by Author)*
 
 #### Convert to two channels
 Some of the sound files are mono (ie. 1 audio channel) while most of them are stereo (ie. 2 audio channels). Since our model expects all items to have the same dimensions, we will convert the mono files to stereo, by duplicating the first channel to the second.
@@ -123,7 +129,8 @@ We then resize all the audio samples to have the same length by either extending
 #### Data Augmentation: Time Shift
 Next, we can do data augmentation on the raw audio signal by applying a Time Shift to shift the audio to the left or the right by a random amount. I go into a lot more detail about this and other data augmentation techniques in this article.
 
-![Time Shift of the audio wave (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/transform-2.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/transform-2.png)
+*Time Shift of the audio wave (Image by Author)*
 
 {% gist cae83ec9d92868482fa64e9a858ad669 %}
 
@@ -132,7 +139,8 @@ We then convert the augmented audio to a Mel Spectrogram. They capture the essen
 
 {% gist 35f19156e18e4cb771564b1c58041594 %}
 
-![Mel Spectrogram of an audio wave (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/transform-3.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/transform-3.png)
+*Mel Spectrogram of an audio wave (Image by Author)*
 
 #### Data Augmentation: Time and Frequency Masking
 Now we can do another round of augmentation, this time on the Mel Spectrogram rather than on the raw audio. We will use a technique called SpecAugment that uses these two methods:
@@ -142,7 +150,8 @@ Now we can do another round of augmentation, this time on the Mel Spectrogram ra
 
 {% gist 7344ca248e3b1d323767c88ce5f529bd %}
 
-![Mel Spectrogram after SpecAugment. Notice the horizontal and vertical mask bands (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/transform-4.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/transform-4.png)
+*Mel Spectrogram after SpecAugment. Notice the horizontal and vertical mask bands (Image by Author)*
 
 ## Define Custom Data Loader
 Now that we have defined all the pre-processing transform functions we will define a custom Pytorch Dataset object.
@@ -160,13 +169,15 @@ All of the functions we need to input our data to the model have now been define
 
 We use our custom Dataset to load the Features and Labels from our Pandas dataframe and split that data randomly in an 80:20 ratio into training and validation sets. We then use them to create our training and validation Data Loaders.
 
-![Split our data for training and validation (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/Flow-5.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/Flow-5.png)
+*Split our data for training and validation (Image by Author)*
 
 {% gist 91a688e05b26536b1e4b249e8f77ed00 %}
 
 When we start training, the Data Loader will randomly fetch one batch of input Features containing the list of audio file names and run the pre-processing audio transforms on each audio file. It will also fetch a batch of the corresponding target Labels containing the class IDs. Thus it will output one batch of training data at a time, which can directly be fed as input to our deep learning model.
 
-![Data Loader applies transforms and prepares one batch of data at a time (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/Flow-6.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/Flow-6.png)
+*Data Loader applies transforms and prepares one batch of data at a time (Image by Author)*
 
 Let’s walk through the steps as our data gets transformed, starting with an audio file:
 
@@ -181,11 +192,13 @@ Thus, each batch will have two tensors, one for the X feature data containing th
 
 Each batch has a shape of (batch_sz, num_channels, Mel freq_bands, time_steps)
 
-![A batch of (X, y) data]({{ site.baseurl }}/assets/images/AudioClassification/data-4.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/data-4.png)
+*A batch of (X, y) data*
 
 We can visualize one item from the batch. We see the Mel Spectrogram with vertical and horizontal stripes showing the Frequency and Time Masking data augmentation.
 
-![A batch of (X, y) data]({{ site.baseurl }}/assets/images/AudioClassification/data-3.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/data-3.png)
+*A batch of (X, y) data*
 
 The data is now ready for input to the model.
 
@@ -194,7 +207,8 @@ The data processing steps that we just did are the most unique aspects of our au
 
 Since our data now consists of Spectrogram images, we build a CNN classification architecture to process them. It has four convolutional blocks which generate the feature maps. That data is then reshaped into the format we need so it can be input into the linear classifier layer, which finally outputs the predictions for the 10 classes.
 
-![The model takes a batch of pre-processed data and outputs class predictions (Image by Author)]({{ site.baseurl }}/assets/images/AudioClassification/Model-1.png)
+![]({{ site.baseurl }}/assets/images/AudioClassification/Model-1.png)
+*The model takes a batch of pre-processed data and outputs class predictions (Image by Author)*
 
 A few more details about how the model processes a batch of data:
 
@@ -225,5 +239,9 @@ We run an inference loop taking care to disable the gradient updates. The forwar
 We have now seen an end-to-end example of sound classification which is one of the most foundational problems in audio deep learning. Not only is this used in a wide range of applications, but many of the concepts and techniques that we covered here will be relevant to more complicated audio problems such as automatic speech recognition where we start with human speech, understand what people are saying, and convert it to text.
 
 And finally, if you liked this article, you might also enjoy my other series on Transformers as well as Reinforcement Learning.
+
+[Transformers Explained Visually: Overview of functionality](https://ketanhdoshi.github.io/Transformers-Overview/)
+
+[Reinforcement Learning Made Simple (Part 1): Intro to Basic Concepts and Terminology](https://ketanhdoshi.github.io/Reinforcement-Learning-Intro/)
 
 Let's keep learning!
