@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Transformers Explained Visually - Functionality
+title: Transformers Explained Visually - Overview of Functionality
 subtitle: A Gentle Guide to Transformers, how they are used for NLP, and why they are better than RNNs, in Plain English. h4.
 imagecaption: Photo by [Arseny Togulev](https://unsplash.com/@tetrakiss) on [Unsplash](https://unsplash.com)
 categories: [ Transformers, tutorial ]

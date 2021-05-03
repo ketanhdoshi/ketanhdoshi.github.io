@@ -1,21 +1,20 @@
 ---
 layout: post
 title: Leveraging GeoLocation Data with Machine Learning - Essential Techniques
+subtitle: A Gentle Guide to Feature Engineering and Visualization with Geolocation Data, in Plain English
+imagecaption: Photo by [Daniel Olah](https://unsplash.com/) on [Unsplash](https://unsplash.com)
+image: https://images.unsplash.com/photo-1537429149818-2d0e3e20857b?w=600&q=60
 categories: [ GeoLocation, tutorial ]
 author: ketan
 tags: featured
-image: https://images.unsplash.com/photo-1537429149818-2d0e3e20857b?w=600&q=60
 ---
-
-### A Gentle Guide to Feature Engineering and Visualization with Geolocation Data, in Plain English
-
-Photo by [Daniel Olah](https://unsplash.com/) on [Unsplash](https://unsplash.com)
 
 Location data is an important category of data that you frequently have to deal with in many machine learning applications. Location data typically provides a lot of extra context to your application's data.
 
 For instance, you might want to predict e-commerce sales projections based on your customer data. The machine learning model might be able to identify more accurate customer buying patterns by also accounting for the customer location information. This would become all the more important if this was for a physical site (rather than online) such as retail stores, restaurants, hotels, or hospitals.
 
-![(Source)]({{ site.baseurl }}/assets/images/GeoLocIntro/Geo%20Location%20Data.png)
+![]({{ site.baseurl }}/assets/images/GeoLocIntro/Geo%20Location%20Data.png)
+*[Source](https://blog.mozilla.org/services/2013/10/28/introducing-the-mozilla-location-service/)*
 
 In this article, my goal is to provide an overview of dealing with geolocation data for machine learning applications. This is a vast subject so I will try to give you a flavor of the issues involved. In future articles, I hope to dive deeper into some of those specific areas.
 
