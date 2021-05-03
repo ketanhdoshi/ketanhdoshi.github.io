@@ -1,21 +1,20 @@
 ---
 layout: post
 title: Image Captions with Deep Learning - State-of-the-Art Architectures
+subtitle: A Gentle Guide to Image Feature Encoders, Sequence Decoders, Attention, and Multimodal Architectures, in Plain English
+imagecaption: Photo by [Brett Jordan](https://unsplash.com/@brett_jordan) on [Unsplash](https://unsplash.com)
 categories: [ Vision, tutorial ]
 author: ketan
 image: https://images.unsplash.com/photo-1555431189-0fabf2667795?w=1200
 ---
-
-### A Gentle Guide to Image Feature Encoders, Sequence Decoders, Attention, and Multimodal Architectures, in Plain English
-
-Photo by [Brett Jordan](https://unsplash.com/@brett_jordan) on [Unsplash](https://unsplash.com)
 
 Image Captioning is a fascinating application of deep learning that has made tremendous progress in recent years. What makes it even more interesting is that it brings together both Computer Vision and NLP.
 
 ## What is Image Captioning? 
 It takes an image as input and produces a short textual summary describing the content of the photo.
 
-![By IDS.photos from Tiverton, UK - Labrador on Quantock, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=25739129 (Source https://en.wikipedia.org/wiki/Labrador_Retriever#/media/File:Labrador_on_Quantock_(2175262184).jpg)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Example-1.jpg)
+![]({{ site.baseurl }}/assets/images/ImageCaptionArch/Example-1.jpg)
+*[(Source)](By IDS.photos from Tiverton, UK - Labrador on Quantock, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=25739129 (Source https://en.wikipedia.org/wiki/Labrador_Retriever#/media/File:Labrador_on_Quantock_(2175262184).jpg))*
 
 eg. A relevant caption for this image might be "Dog standing in the grass" or "Labrador Retriever standing in the grass".
 
@@ -28,7 +27,8 @@ Broadly speaking Image Captioning makes use of three primary components. By the 
 1. #### Image Feature Encoder
    This takes the source photo as input and produces an encoded representation of it that captures its essential features.
 
-   ![Image input to an 'image Encoder' and outputs an encoded vector (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-1.png)
+   ![]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-1.png)
+   *Image input to an 'image Encoder' and outputs an encoded vector (Image by Author)*
 
    This uses a CNN architecture and is usually done using transfer learning. We take a CNN model that was pre-trained for image classification and remove the final section which is the 'classifier'. There are several such models like VGGNet, ResNet, and Inception.
    
@@ -36,7 +36,8 @@ Broadly speaking Image Captioning makes use of three primary components. By the 
    
    eg. It starts by extracting simple geometric shapes like curves and semi-circles in the initial layers, progresses to higher-level structures such as noses, eyes, and hands, and eventually identifies elements such as faces and wheels.
 
-   ![Image classification network showing the two sections and cutting off the classifier (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-2.png)
+   ![]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-2.png)
+   *Image classification network showing the two sections and cutting off the classifier (Image by Author)*
 
    In an Image Classification model, this feature map is then fed to the last stage which is the Classifier that generates the final output prediction of the class (eg. cat or car) of the primary object in the image.
 
@@ -47,7 +48,8 @@ Broadly speaking Image Captioning makes use of three primary components. By the 
 
    Typically this is a Recurrent Network model consisting of a stack of LSTM layers fed by an Embedding layer.
 
-   ![LSTM network with initial state and sequence so far as input, output fed back (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-3.png)
+   ![]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-3.png)
+   *LSTM network with initial state and sequence so far as input, output fed back (Image by Author)*
    
    It takes the image encoded vector as its initial state and is seeded with a minimal input sequence consisting of only a 'Start' token. It 'decodes' the input image vector and outputs a sequence of tokens.
    
@@ -61,6 +63,7 @@ Broadly speaking Image Captioning makes use of three primary components. By the 
    This probability is the likelihood that that word occurs at that position in the sentence. We could then use Greedy Search to produce the final sentence by picking the word with the highest probability at each position.
 
    ![ (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-4.png)
+   *(Image by Author)*
 
    That sentence is then output as the predicted caption.
 
@@ -69,7 +72,8 @@ Almost all Image Captioning architectures make use of this approach with the thr
 ## Architecture: Encoder-Decoder
 Perhaps the most common deep learning architecture for Image Captioning is sometimes called the "Inject" architecture and directly connects up the Image Feature Encoder to the Sequence Decoder, followed by the Sentence Generator, as described above. 
 
-![Image Feature Encoder connected to Text Generator (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-5.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-5.png)
+*Image Feature Encoder connected to Text Generator (Image by Author)*
 
 ## Architecture: Multi-Modal
 The Inject architecture was the original architecture for Image Captioning and is still very popular. However, an alternative which gets called the "Merge" architecture has been found to produce better results.
@@ -79,7 +83,8 @@ Rather than connecting the Image Encoder as the input of the Sequence Decoder se
 - the CNN network processes only the image and 
 - the LSTM network operates only on the sequence generated so far.
 
-![Merge architecture (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-6.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-6.png)
+*Merge architecture (Image by Author)*
 
 The outputs of these two networks are then combined together with a Multimodal layer (which could be a Linear and Softmax layer). It does the job of interpreting both outputs and is followed by the Sentence Generator that produces the final predicted caption.
 
@@ -92,7 +97,8 @@ Earlier we talked about using the backbone from a pre-trained Image Classificati
 
 However, in most photos, you are likely to have multiple objects of interest. Instead of using an Image Classification backbone, why not use a pre-trained Object Detection backbone to extract features from the image?
 
-![Object Detection backbone]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-7.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-7.png)
+*Object Detection backbone (Image by Author)*
 
 The Object Detection model generates bounding boxes around all the prominent objects in the scene. Not only does it label multiple objects, but it identifies their relative positions within the picture. Thus it is able to provide a richer encoded representation of the image, which can then be used by the Sequence Decoder to include a mention of all of those objects in its caption.
 
@@ -103,7 +109,8 @@ It is therefore not surprising to find that Attention has also been applied to I
 
 As the Sequence Decoder produces each word of the caption, Attention is used to help it concentrate on the part of the image that is most relevant to the word it is generating.
 
-![Image Caption architecture with Attention (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-8.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-8.png)
+*Image Caption architecture with Attention (Image by Author)*
 
 The Attention module takes the encoded image vector along with the current output token from the LSTM. It produces a weighted Attention score. When that score is combined with the image it boosts the weight of those pixels that the LSTM should focus on while predicting the next token.
 
@@ -112,7 +119,8 @@ For instance, for the caption "The dog is behind the curtain", the model focuses
 ## Architecture: Encoder-Decoder with Transformers
 When talking about Attention, the current giant is undoubtedly the Transformer. It revolves around Attention at its core and does not use the Recurrent Network which has been an NLP mainstay for years. The architecture is very similar to the Encoder-Decoder with the Transformer replacing the LSTM.
 
-![Image Caption architecture with Transformer (Image by Author)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-9.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionArch/Arch-9.png)
+*Image Caption architecture with Transformer (Image by Author)*
 
 A few different variants of the Transformer architecture have been proposed to address the Image Captioning problem. One approach attempts to encode not just the individual objects in the photo but also their spatial relationships, as that is important in understanding the scene. For instance, knowing whether an object is under, behind, or next to another object provides a useful context in generating a caption.
 
@@ -121,14 +129,16 @@ Another variant of the Object Detection approach is known as Dense Captioning. T
 
 Hence it can represent not just a single caption but multiple captions for different regions of the image. This model helps it capture all of the detail within the image.
 
-![(Source https://arxiv.org/pdf/1511.07571.pdf)]({{ site.baseurl }}/assets/images/ImageCaptionArch/Example-2.png)
+![]({{ site.baseurl }}/assets/images/ImageCaptionArch/Example-2.png)
+*Dense Caption [(Source](https://arxiv.org/pdf/1511.07571.pdf), by permission of Prof Fei-Fei Li and Justin Johnson)*
 
 ## Sentence Generator with Beam Search
 When the Sentence Generator produces the final caption, it can use Beam Search rather than Greedy Search that we referred to above. Rather than just picking the single word with the highest probability at each position, Beam Search chooses several words at each step, based on the combined probability of all the words in the sentence till that point.
 
-![Beam Search example, with width = 2 (Image by Author)]({{ site.baseurl }}/assets/images/BeamSearch/Beam-1.png)
+![]({{ site.baseurl }}/assets/images/BeamSearch/Beam-1.png)
+*Beam Search example, with width = 2 (Image by Author)*
 
-Beam Search is very effective and is widely used in many NLP applications. I have another article that explains its operation in detail, in a visual way.
+Beam Search is very effective and is widely used in many NLP applications. I have another [article](https://ketanhdoshi.github.io/Beam-Search/) that explains its operation in detail, in a visual way.
 If you are interested I encourage you to take a look.
 
 ## Bleu Score Metric

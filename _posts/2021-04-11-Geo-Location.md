@@ -14,7 +14,7 @@ Location data is an important category of data that you frequently have to deal 
 For instance, you might want to predict e-commerce sales projections based on your customer data. The machine learning model might be able to identify more accurate customer buying patterns by also accounting for the customer location information. This would become all the more important if this was for a physical site (rather than online) such as retail stores, restaurants, hotels, or hospitals.
 
 ![]({{ site.baseurl }}/assets/images/GeoLocIntro/Geo%20Location%20Data.png)
-*[Source](https://blog.mozilla.org/services/2013/10/28/introducing-the-mozilla-location-service/)*
+*[(Source)](https://blog.mozilla.org/services/2013/10/28/introducing-the-mozilla-location-service/)*
 
 In this article, my goal is to provide an overview of dealing with geolocation data for machine learning applications. This is a vast subject so I will try to give you a flavor of the issues involved. In future articles, I hope to dive deeper into some of those specific areas.
 
@@ -24,10 +24,12 @@ As with all machine learning applications, we start with a dataset about the app
 Let's say that we were trying to predict real estate prices. Our dataset would normally consist of information about the house (its type, age, square footage, and so on), its price, and of course, its location. This is structured tabular data.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/Data-1.png)
+*(Image by Author)*
 
 Other applications might use other types of data as well, like images for example. We might use satellite imagery to make predictions for applications like agriculture (eg. forecast food output), geology (eg. best mining location) and so on.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/Satellite%20Image.png)
+*(Image by Author)*
 
 Clearly, the location plays a big factor in determining these predictions. How can we leverage that?
 
@@ -35,6 +37,7 @@ Clearly, the location plays a big factor in determining these predictions. How c
 We could augment our dataset by adding external location-based data (either publicly available or from a third party). I'll use the term "geospatial data" or "GIS data" to describe this because it includes information related to the geographical context of the location.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/GIS.png)
+*(Image by Author)*
 
 For our real estate application, this might be neighborhood information, locations of schools and parks, city administrative boundaries, population density, earthquake or flood zones, and any number of such factors.
 
@@ -58,6 +61,7 @@ Geo geometry data is stored as Vector objects such as:
 - **Multi Polygon**: Collection of Polygons.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/Geo%20Format-2.png)
+*(Image by Author)*
 
 Besides storing these individual objects in isolation, geo data could also represent topology, which is the relationship between these objects. They define additional objects such as:
 - **Arc**: similar to a line
@@ -65,6 +69,7 @@ Besides storing these individual objects in isolation, geo data could also repre
 - **Vertex**: a bend in a line
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/Geo%20Format.png)
+*(Image by Author)*
 
 They use data structures that capture the relationship between these objects such as:
 - Which objects are next to each other?
@@ -90,6 +95,7 @@ Our geodata contains (x, y) coordinates of geographical locations usually as lat
 Those coordinates are just numbers in an arbitrary space. For them to uniquely map to an actual place in the real world, they must be associated with a coordinate system, known as a CRS.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/Geo%20Coordinates.png)
+*(Image by Author)*
 
 For our purposes, it is enough to know that, because our earth is not a perfect sphere, there is no one perfect universal CRS. We have many different CRSs, each optimized for specific purposes or different regions of the globe.
 
@@ -97,6 +103,7 @@ For our purposes, it is enough to know that, because our earth is not a perfect 
 Similarly, the CRS is used to project the location coordinates onto a map for visualization.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/Map%20Projection.jpg)
+*(Image by Author)*
 
 Therefore, if you obtain geodata from different sources, you must take care to re-project all those coordinates onto the same CRS. And also make sure that it matches the CRS used by the visualization map. Otherwise, your location coordinates will not be aligned correctly.
 
@@ -114,16 +121,19 @@ Convert it to a GeoDataFrame by transforming the location information into its g
 And then plot the GeoDataFrame.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/Visualization-1.png)
+*(Image by Author)*
 
 By themselves, the data points do not carry enough context. Since these are locations in New York City, you must overlay them on a base map of New York (which we had loaded from a Shapefile) to make it meaningful.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/Visualization-2.png)
+*(Image by Author)*
 
 The data points should be overlaid on a base map to get the correct context.
 
 {% gist 743199c6074d78aed0d811ef4386f0e7 %}
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/Visualization-3.png)
+*(Image by Author)*
 
 ## Feature Engineering
 Depending on the problem you want to solve you can use the location data to add more features to your dataset. Here are a few that are commonly used:
@@ -138,11 +148,13 @@ Once you have the exact location coordinates of places of interest, you could co
 - **Manhattan distance** is relevant to city locations, where streets might have a grid layout. It is intended to calculate the actual travel distance (say, driving or walking) between two points along city streets, as that might be more relevant than the physical distance "as the crow flies". Its name comes from computing distances in Manhattan in New York where everything is laid out in square city blocks with roads running parallel to each other and intersecting at right angles. However in practice, even though they run straight, streets aren't always aligned in a north-south and east-west direction. So it accounts for this and computes the corrected distance based on the angle of rotation of the city street map.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/Manhattan%20Distance.png)
+*(Image by Author)*
 
 ### Bearing of one point to another
 When traveling between two places on the globe, in addition to the distance you can compute the direction of travel. The bearing computes the initial direction when you head out from the starting point.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/GeoLocIntro/Bearing.png)
+*(Image by Author)*
 
 ### Distance from a point to a line 
 This is another useful data point that you might need to capture. For example, how far is a house from a highway, a railway track, or a bus route? Or how far is a farm from a river?
