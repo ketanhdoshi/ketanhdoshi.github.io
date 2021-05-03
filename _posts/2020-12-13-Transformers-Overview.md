@@ -36,7 +36,7 @@ At its core, it contains a stack of Encoder layers and Decoder layers. To avoid 
 The Encoder stack and the Decoder stack each have their corresponding Embedding layers for their respective inputs. Finally, there is an Output layer to generate the final output.
 
 [(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-1.png)
-{% include image.html url="/TransformerOverview/Arch-1.png" description="My cat, Robert Downey Jr." %}
+{% include image.html url="/TransformerOverview/Arch-1.png" description="My cat, *[Arseny Togulev](https://unsplash.com/@tetrakiss) on [Unsplash](https://unsplash.com).*" %}
 
 | ![space-1.jpg]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-1.png) | 
 |:--:| 
