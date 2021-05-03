@@ -25,7 +25,8 @@ Here’s a quick summary of the previous and following articles in the series. M
 ## What is a Transformer
 The Transformer architecture excels at handling text data which is inherently sequential. They take a text sequence as input and produce another text sequence as output. eg. to translate an input English sentence to Spanish.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-4.png)
+![]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-4.png)
+*(Image by Author)*
 
 At its core, it contains a stack of Encoder layers and Decoder layers. To avoid confusion we will refer to the individual layer as an Encoder or a Decoder and will use Encoder stack or Decoder stack for a group of Encoder layers.
 
@@ -36,7 +37,8 @@ The Encoder stack and the Decoder stack each have their corresponding Embedding 
 
 All the Encoders are identical to one another. Similarly, all the Decoders are identical.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-2.png)
+![]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-2.png)
+*(Image by Author)*
 
 - The Encoder contains the all-important Self-attention layer that computes the relationship between different words in the sequence, as well as a Feed-forward layer.
 - The Decoder contains the Self-attention layer and the Feed-forward layer, as well as a second Encoder-Decoder attention layer.
@@ -44,7 +46,8 @@ All the Encoders are identical to one another. Similarly, all the Decoders are i
 
 The Encoder is a reusable module that is the defining component of all Transformer architectures. In addition to the above two layers, it also has Residual skip connections around both layers along with two LayerNorm layers.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-3.png)
+![]({{ site.baseurl }}/assets/images/TransformerOverview/Arch-3.png)
+*(Image by Author)*
 
 There are many variations of the Transformer architecture. Some Transformer architectures have no Decoder at all and rely only on the Encoder.
 
@@ -55,7 +58,8 @@ While processing a word, Attention enables the model to focus on other words in 
 
 eg. ‘Ball’ is closely related to ‘blue’ and ‘holding’. On the other hand, ‘blue’ is not related to ‘boy’.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Attn-1.png)
+![]({{ site.baseurl }}/assets/images/TransformerOverview/Attn-1.png)
+*(Image by Author)*
 
 The Transformer architecture uses self-attention by relating every word in the input sequence to every other word.
 
@@ -66,13 +70,15 @@ eg. Consider two sentences:
 
 In the first sentence, the word ‘it’ refers to ‘cat’, while in the second it refers to ‘milk. When the model processes the word ‘it’, self-attention gives the model more information about its meaning so that it can associate ‘it’ with the correct word.
 
-![Dark colors represent higher attention (Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Attn-2.png)
+![]({{ site.baseurl }}/assets/images/TransformerOverview/Attn-2.png)
+*Dark colors represent higher attention (Image by Author)*
 
 To enable it to handle more nuances about the intent and semantics of the sentence, Transformers include multiple attention scores for each word.
 
 eg. While processing the word ‘it’, the first score highlights ‘cat’, while the second score highlights ‘hungry’. So when it decodes the word ‘it’, by translating it into a different language, for instance, it will incorporate some aspect of both ‘cat’ and ‘hungry’ into the translated word.
 
-![(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Attn-3.png)
+![]({{ site.baseurl }}/assets/images/TransformerOverview/Attn-3.png)
+*(Image by Author)*
 
 ## Training the Transformer
 The Transformer works slightly differently during Training and while doing Inference.
@@ -85,6 +91,7 @@ Let’s first look at the flow of data during Training. Training data consists o
 The Transformer’s goal is to learn how to output the target sequence, by using both the input and target sequence.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Data-1.png)
+*(Image by Author)*
 
 The Transformer processes the data like this:
 1. The input sequence is converted into Embeddings (with Position Encoding) and fed to the Encoder.
@@ -101,7 +108,8 @@ So, like in a Seq2Seq model, we generate the output in a loop and feed the outpu
 
 The difference from the Seq2Seq model is that, at each timestep, we re-feed the entire output sequence generated thus far, rather than just the last word.
 
-![Inference flow, after first timestep (Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Data-2.png)
+![]({{ site.baseurl }}/assets/images/TransformerOverview/Data-2.png)
+*Inference flow, after first timestep (Image by Author)*
 
 The flow of data during Inference is:
 1. The input sequence is converted into Embeddings (with Position Encoding) and fed to the Encoder.
@@ -132,11 +140,13 @@ There are different flavors of the Transformer architecture for different proble
 A Sentiment Analysis application, for instance, would take a text document as input. A Classification head takes the Transformer’s output and generates predictions of the class labels such as a positive or negative sentiment.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/App-1.png)
+*(Image by Author)*
 
 #### Transformer Language Model architecture
 A Language Model architecture would take the initial part of an input sequence such as a text sentence as input, and generate new text by predicting sentences that would follow. A Language Model head takes the Transformer’s output and generates a probability for every word in the vocabulary. The highest probability word becomes the predicted output for the next word in the sentence.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/App-2.png)
+*(Image by Author)*
 
 ## How are they better than RNNs?
 RNNs and their cousins, LSTMs and GRUs, were the de facto architecture for all NLP applications until Transformers came along and dethroned them.
@@ -157,6 +167,7 @@ The Transformer architecture addresses both of these limitations. It got rid of 
 - They process all the words in the sequence in parallel, thus greatly speeding up computation.
 
 ![(Image by Author)]({{ site.baseurl }}/assets/images/TransformerOverview/Advtg.png)
+*(Image by Author)*
 
 - The distance between words in the input sequence does not matter. It is equally good at computing dependencies between adjacent words and words that are far apart.
 
