@@ -177,4 +177,8 @@ Now that we have a high-level idea of what a Transformer is, we can go deeper in
 
 And finally, if you are interested in NLP, you might also enjoy my article on Beam Search, and my other series on Audio Deep Learning and Reinforcement Learning.
 
+[State-of-the-Art Techniques](https://ketanhdoshi.github.io/Audio-Intro/)
+
+[Reinforcement Learning Made Simple (Part 1): Intro to Basic Concepts and Terminology](https://ketanhdoshi.github.io/Reinforcement-Learning-Intro/)
+
 Let's keep learning!
