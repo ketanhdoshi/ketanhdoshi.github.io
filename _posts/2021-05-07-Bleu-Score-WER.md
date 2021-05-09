@@ -110,45 +110,53 @@ Let's say we have a NLP model that produces a predicted sentence as below. For s
 
 The first step is to compute Precisions scores for 1-grams through 4-grams.
 
-**Precision 1-gram**
-Precision 1-gram = Number of correct predicted 1-grams / Number of total predicted 1-grams = 5 / 8
+#### Precision 1-gram
+
+_Precision 1-gram = Number of correct predicted 1-grams / Number of total predicted 1-grams_
 
 ![]({{ site.baseurl }}/assets/images/BleuScore/Precision-1.png)
 *Precision(Image by Author)*
 
-**Precision 2-gram**
-Precision 2-gram = Number of correct predicted 2-grams / Number of total predicted 2-grams
+So, Precision 1-gram = $$ p_n $$ = 5 / 8
+
+$$ p_n $$
+
+#### Precision 2-gram
+
+_Precision 2-gram = Number of correct predicted 2-grams / Number of total predicted 2-grams_
+
 Let's look at all the 2-grams in our predicted sentence:
 
 ![]({{ site.baseurl }}/assets/images/BleuScore/Precision-2.png)
 *Precision 2-gram (Image by Author)*
 
-So, Precision 2-gram = ?? / ??
+So, Precision 2-gram = 4 / 7
 
-**Precision 3-gram**
-Similarly, Precision 3-gram = 
+#### Precision 3-gram
+
+Similarly, Precision 3-gram = 3 / 6
 
 ![]({{ site.baseurl }}/assets/images/BleuScore/Precision-3.png)
 *Precision 3-gram (Image by Author)*
 
-**Precision 4-gram**
-And, Precision 4-gram = 
+#### Precision 4-gram
+
+And, Precision 4-gram = 2 / 5
 
 ![]({{ site.baseurl }}/assets/images/BleuScore/Precision-4.png)
 *Precision 4-gram(Image by Author)*
 
-**Geometric Average Precision Scores**
-Second, we combine these Precision Scores:
+#### Geometric Average Precision Scores
+
+Next, we combine these Precision Scores using the formula blow. This can be computed for different values of N. Typically, we use _N = 4_ and uniform weights = _N / 4_
 
 ![]({{ site.baseurl }}/assets/images/BleuScore/Bleu-3.png)
 *Precision Scores (Image by Author)*
 
-Typically, we use _N = 4_ and uniform weights = _N / 4_
-
-**Brevity Penalty**
+#### Brevity Penalty
 The third step is to compute a 'Brevity Penalty'.
 
-If you notice the Precision formulae above, we could have output a predicted sentence consisting of a single word like "The' or "late". For this, the 1-gram Precision would have been 1/1 = 1, indicating a perfect score. This is obviously misleading because it encourages the model to output fewer words and get a high score.
+If you notice how Precision is calculated, we could have output a predicted sentence consisting of a single word like "The' or "late". For this, the 1-gram Precision would have been 1/1 = 1, indicating a perfect score. This is obviously misleading because it encourages the model to output fewer words and get a high score.
 
 To offset this, the Brevity Penalty penalises sentences that are too short.
 
@@ -160,7 +168,8 @@ and r is _predicted length = number of words in predicted sentence_
 
 This ensures that the Brevity Penalty cannot be larger than 1, even if the predicted sentence is much longer than the target. We can see that if you predict very few words, this value will be low. 
 
-Finally, to calculate the Bleu Score:
+#### Bleu Score
+Finally, to calculate the Bleu Score, we multiply the Brevity Penalty with the Geometric Average of the Precision Scores.
 
 ![]({{ site.baseurl }}/assets/images/BleuScore/Bleu-1.png)
 *Bleu Score (Image by Author)*
