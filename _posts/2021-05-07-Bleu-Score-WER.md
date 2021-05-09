@@ -101,7 +101,7 @@ _Clipped Precision = 3 / 6_
 
 NB: For the rest of this article, we will just use "Precision" to mean "Clipped Precision". 
 
-## How is it calculated?
+## How is Bleu Score calculated?
 
 Let's say we have a NLP model that produces a predicted sentence as below. For simplicity we will take just one Target Sentence, but as in the example above, the procedure is very similar with multiple Target Sentences.
 
@@ -117,7 +117,9 @@ _Precision 1-gram = Number of correct predicted 1-grams / Number of total predic
 ![]({{ site.baseurl }}/assets/images/BleuScore/Precision-1.png)
 *Precision(Image by Author)*
 
-So, Precision 1-gram = p_n = 5 / 8
+So, Precision 1-gram = p<sub>1</sub> = 5 / 8
+
+This is some <sub>superscript</sub> text.
 
 #### Precision 2-gram
 
