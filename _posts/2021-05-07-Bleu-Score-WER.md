@@ -117,9 +117,7 @@ _Precision 1-gram = Number of correct predicted 1-grams / Number of total predic
 ![]({{ site.baseurl }}/assets/images/BleuScore/Precision-1.png)
 *Precision(Image by Author)*
 
-So, Precision 1-gram = $$ p_n $$ = 5 / 8
-
-$$ p_n $$
+So, Precision 1-gram = p_n = 5 / 8
 
 #### Precision 2-gram
 
