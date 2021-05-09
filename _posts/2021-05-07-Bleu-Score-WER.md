@@ -23,7 +23,7 @@ eg. "The ball is blue" and "The ball has a blue color".
 The problem is even harder with applications like image captioning or text summarization, where the range of possible answers is even larger.
 
 ![]({{ site.baseurl }}/assets/images/BleuScore/Caption-1.png)
-*The same image can have many valid captions(Image by Author)*
+*The same image can have many valid captions (Image by Author)*
 
 In order to evaluate the performance of our model we need a quantitative metric to measure the quality of its predictions.
 
@@ -54,21 +54,23 @@ This metric measures the number of words in the Predicted Sentence that also occ
 
 Let's say, that we have:
 
-**Target Sentence**: He eats an apple
-**Predicted Sentence**: He ate an apple
+- **Target Sentence**: He eats an apple
+- **Predicted Sentence**: He ate an apple
 
 We would normally compute the Precision using the formula:
 
-_Precision = Number of correct predicted words / Number of total predicted words_ = 3 / 4
+_Precision = Number of correct predicted words / Number of total predicted words_
+
+_Precision = 3 / 4_
 
 But using Precision like this is not good enough. There are two cases that we still need to handle.
 
 #### Repetition
 The first issue is that this formula allows us to cheat. We could predict a sentence:
 
-**Predicted Sentence**: He He He
+- **Predicted Sentence**: He He He
 
-and get a perfect Precision score = 3 / 3 = 1
+and get a perfect Precision = 3 / 3 = 1
 
 #### Multiple Target Sentences
 Secondly, as we've already discussed, there are many different correct ways to express the same sentence. To account for this, in many NLP models, we might be given multiple acceptable target sentences that capture many different variations.
@@ -80,41 +82,31 @@ Let's go through an example to understand how it works.
 
 Let's say, that we have the following sentences:
 
-**Target Sentence 1**: He eats a sweet apple
-**Target Sentence 2**: He is eating a tasty apple
-**Predicted Sentence**: He He He eats tasty fruit
+- **Target Sentence 1**: He eats a sweet apple
+- **Target Sentence 2**: He is eating a tasty apple
+- **Predicted Sentence**: He He He eats tasty fruit
 
 We now do two things differently:
 - We compare each word from the predicted sentence with all of the target sentences. If the word matches any target sentence, it is considered to be correct.
-- We limit the count for each correct word to the maximum number of times that word occurs in the Target Sentence. This helps to avoid the Repetition problem. This will become clearer below.
+- We limit the count for each correct word to the maximum number of times that that word occurs in the Target Sentence. This helps to avoid the Repetition problem. This will become clearer below.
 
 ![]({{ site.baseurl }}/assets/images/BleuScore/Precision-5.png)
-*Clipped Precision(Image by Author)*
+*Clipped Precision (Image by Author)*
 
 For instance, the word "He" occurs only once in each Target Sentence. Therefore, even though "He" occurs thrice in the Predicted Sentence, we 'clip' the count to one, as that is the maximum count in any Target Sentence.
 
-_Clipped Precision = Clipped number of correct predicted words / Number of total predicted words_ = 3 / 6
+_Clipped Precision = Clipped number of correct predicted words / Number of total predicted words_
+
+_Clipped Precision = 3 / 6_
 
 NB: For the rest of this article, we will just use "Precision" to mean "Clipped Precision". 
 
 ## How is it calculated?
 
-Let's say we have a NLP model that produced a predicted sentence as below. For simplicity we will take just one Target Sentence, but as in the example above, the procedure is very similar with multiple Target Sentences.
+Let's say we have a NLP model that produces a predicted sentence as below. For simplicity we will take just one Target Sentence, but as in the example above, the procedure is very similar with multiple Target Sentences.
 
-**Target Sentence**: The guard arrived late because it was raining
-**Predicted Sentence**: The watchman arrived late because of the rain
-
-To calculate the Bleu Score:
-
-![]({{ site.baseurl }}/assets/images/BleuScore/Bleu-1.png)
-*Bleu Score(Image by Author)*
-
-BLEU-1 is simply the unigram precision, 
-BLEU-2 is the geometric average of unigram and bigram precision, 
-BLEU-3 is the geometric average of unigram, bigram, and trigram precision and so on
-
-![]({{ site.baseurl }}/assets/images/BleuScore/Bleu-3.png)
-*Precision Scores(Image by Author)*
+- **Target Sentence**: The guard arrived late because it was raining
+- **Predicted Sentence**: The watchman arrived late because of the rain
 
 The first step is to compute Precisions scores for 1-grams through 4-grams.
 
@@ -129,7 +121,7 @@ Precision 2-gram = Number of correct predicted 2-grams / Number of total predict
 Let's look at all the 2-grams in our predicted sentence:
 
 ![]({{ site.baseurl }}/assets/images/BleuScore/Precision-2.png)
-*Precision 2-gram(Image by Author)*
+*Precision 2-gram (Image by Author)*
 
 So, Precision 2-gram = ?? / ??
 
@@ -137,7 +129,7 @@ So, Precision 2-gram = ?? / ??
 Similarly, Precision 3-gram = 
 
 ![]({{ site.baseurl }}/assets/images/BleuScore/Precision-3.png)
-*Precision 3-gram(Image by Author)*
+*Precision 3-gram (Image by Author)*
 
 **Precision 4-gram**
 And, Precision 4-gram = 
@@ -145,8 +137,16 @@ And, Precision 4-gram =
 ![]({{ site.baseurl }}/assets/images/BleuScore/Precision-4.png)
 *Precision 4-gram(Image by Author)*
 
+**Geometric Average Precision Scores**
+Second, we combine these Precision Scores:
+
+![]({{ site.baseurl }}/assets/images/BleuScore/Bleu-3.png)
+*Precision Scores (Image by Author)*
+
+Typically, we use _N = 4_ and uniform weights = _N / 4_
+
 **Brevity Penalty**
-The second step is to compute a 'Brevity Penalty'.
+The third step is to compute a 'Brevity Penalty'.
 
 If you notice the Precision formulae above, we could have output a predicted sentence consisting of a single word like "The' or "late". For this, the 1-gram Precision would have been 1/1 = 1, indicating a perfect score. This is obviously misleading because it encourages the model to output fewer words and get a high score.
 
@@ -155,19 +155,23 @@ To offset this, the Brevity Penalty penalises sentences that are too short.
 ![]({{ site.baseurl }}/assets/images/BleuScore/Bleu-2.png)
 *Brevity Penalty(Image by Author)*
 
-where c is blah blah
-and r is blah blah
+where c is _target length = number of words in target sentence_
+and r is _predicted length = number of words in predicted sentence_
 
-It first computes: _predicted length / target length_ = _number of words in predicted sentence / number of words in target sentence_
+This ensures that the Brevity Penalty cannot be larger than 1, even if the predicted sentence is much longer than the target. We can see that if you predict very few words, this value will be low. 
 
-We can see that if you predict very few words, this value will be low. Then
+Finally, to calculate the Bleu Score:
 
-_Brevity Penalty = min (1, predicted length / target length)_
+![]({{ site.baseurl }}/assets/images/BleuScore/Bleu-1.png)
+*Bleu Score (Image by Author)*
 
-This ensures that the Brevity Penalty cannot be larger than 1, even if the predicted sentence is much longer than the target.
+Bleu Score can be computed for different values of N. Typically, we use N = 4.
+
+- BLEU-1 uses the unigram Precision score
+- BLEU-2 uses the geometric average of unigram and bigram precision
+- BLEU-3 uses the geometric average of unigram, bigram, and trigram precision
 
 Finally, the formula for Bleu Score is
-
 
 ![]({{ site.baseurl }}/assets/images/BleuScore/Bleu-4.png)
 *Bleu Score formula(Image by Author)*
