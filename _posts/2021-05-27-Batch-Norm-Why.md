@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Batch Norm Explained Visually — Why it speeds up training
+title: Batch Norm Explained Visually — Why does it work so well? it speeds up training
 subtitle: A Gentle Guide to why Batch Norm works and the reasons for training converging faster, in Plain English
 imagecaption: Photo by [](https://unsplash.com/@hirmin) on [Unsplash](https://unsplash.com) 
 categories: [ Neural, tutorial ]
@@ -20,10 +20,10 @@ There is no dispute that Batch Norm works wonderfully well and provides substant
 
 To be sure, many theories have been proposed. But over the years, there is disagreement about which of those theories is the right one.
 
-The first explanation for why Batch Norm worked, by the original inventors was based on something called Internal Covariate Shift. Later in another [paper](https://arxiv.org/pdf/1805.11604.pdf) by MIT researchers, that theory was refuted, and an alternate proposed based on Smoothening of the Loss and Gradient curves. These are the two most well-known hypotheses, so let's go over these below.
+The first explanation by the original inventors for why Batch Norm worked, was based on something called Internal Covariate Shift. Later in another [paper](https://arxiv.org/pdf/1805.11604.pdf) by MIT researchers, that theory was refuted, and an alternate view was proposed based on Smoothening of the Loss and Gradient curves. These are the two most well-known hypotheses, so let's go over them below.
 
-#### Internal Covariate Shift
-If you're like me, I'm sure you find this terminology quite intimidating! What does it mean, in simple language?
+## Theory 1 - Internal Covariate Shift
+If you're like me, I'm sure you find this terminology quite intimidating! :-) What does it mean, in simple language?
 
 Let's say that we want to train a model and the ideal target output function (although we don't know it ahead of time) that the model needs to learn is as below.
 
@@ -60,11 +60,11 @@ However, in each iteration, the previous layer 'k-1' is also doing the same thin
 ![]({{ site.baseurl }}/assets/images/BatchNorm/ICS-5.png)
 *How Covariate Shift affects Training (Image by Author)*
 
-That is also the the input for layer 'k'. In other words, that layer receives input data that has a different distribution than before. It is now forced to learn to fit to this new input. As we can see, each layer ends up trying to learn from a constantly shifting input, thus taking longer to converge and slowing down the training.
+That is also the input for layer 'k'. In other words, that layer receives input data that has a different distribution than before. It is now forced to learn to fit to this new input. As we can see, each layer ends up trying to learn from a constantly shifting input, thus taking longer to converge and slowing down the training.
 
-Therefore the proposed hypothesis was that Batch Norm helps to stabilize these shifting distributions and thus speeds up training. 
+Therefore the proposed hypothesis was that Batch Norm helps to stabilize these shifting distributions from one iteration to the next, and thus speeds up training. 
 
-#### Loss and Gradient Smoothening
+## Theory 2 - Loss and Gradient Smoothening
 The MIT paper published results that challenge the claim that addressing Covariate Shift is responsbile for Batch Norm's performance, and puts forward a different explanation.
 
 In a typical neural network, the "loss landscape" is not a smooth convex surface. It is very bumpy with sharp cliffs and flat surfaces. This creates a challenge for gradient descent - because it could suddenly encounter an obstacle in what it thought was a promising direction to follow. To compensate for this, the learning rate is kept low so that we take only small steps in any direction.
@@ -74,33 +74,32 @@ In a typical neural network, the "loss landscape" is not a smooth convex surface
 
 If you would like to read more about this, please see my [article](https://ketanhdoshi.github.io/Optimizer-Techniques/) on neural network Optimizers that explains this in more detail, and how different Optimizer algorithms have evolved to tackle these challenges.
 
-What Batch Norm does is to smoothen the loss landscape substantially by changing the distribution of the network's weights. This means that gradient descent can confidently take a step in a direction knowing that it will not find abrupt disruptions along the way. It can thus take larger steps by using a bigger learning rate.
+The paper proposes that what Batch Norm does is to smoothen the loss landscape substantially by changing the distribution of the network's weights. This means that gradient descent can confidently take a step in a direction knowing that it will not find abrupt disruptions along the way. It can thus take larger steps by using a bigger learning rate.
 
 To investigate this theory, the paper conducted an experiment to analyze the loss landscape of a model during training. We'll try and visualize this with a simple example.
 
-Let's say that we have a simple network with two parameters (w1 and w2). The values of these weights can be shown on a 2D surface, with one axis for each weight. Each combination of weight values correspond to a point on this 2D plane. 
-
-?? At a certain iteration 't' during training, the two weights are at point Pt. The network now calculates the gradient of the loss with respect to each weight. It then takes a step along the direction of that gradient by updating the weights and moving to point P_t+1. We then repeat the process and move to point P_t+2. ??
+Let's say that we have a simple network with two weight parameters (w1 and w2). The values of these weights can be shown on a 2D surface, with one axis for each weight. Each combination of weight values correspond to a point on this 2D plane. 
 
 As the weights change during training, we move to another point on this surface.  Hence one can plot the trajectory of the weights over the training iterations.
 
-Note that the picture below displays only the weight values at each point. To visualize the loss, imagine a 3D surface, with a third axis for the loss coming out of the paper. If we measured and plotted the loss for all the different combinations of weights, the shape of that loss curve is called the loss landscape.
+Note that the picture below displays only the weight values at each point. To visualize the loss, imagine a 3D surface, with a third axis for the loss coming out of the page. If we measured and plotted the loss for all the different combinations of weights, the shape of that loss curve is called the loss landscape.
 
 ![]({{ site.baseurl }}/assets/images/BatchNorm/Smooth-1.png)
-* (Image by Author)*
+*(Image by Author)*
 
 The goal of the experiment was to examine the loss landscape, by measuring what the Loss and Gradient would look like at different points if we kept moving in the same direction. They measured this with and without Batch Norm, to see what effect Batch Norm had.
 
-So, starting from Pt, it took a single step forward with some learning rate to reach a next point P_t+1. Then it went back to Pt and repeated the step with a different learning rate. 
+let's say that at some iteration 't' during training it is at point Pt. It evaluates the loss and the gradient at Pt. Then, starting from that point, it 
+it takes a single step forward with some learning rate to reach a next point P_t+1. Then it does a rewind back to Pt and repeats the step with a higher learning rate. 
 
-In other words, it tried three different alternatives by taking three different-sized steps (blue, green and pink arrows) along the gradient direction, using three different learning rates. That brought us to three different next points for P_t+1. Then, at each of those P_t+1 points, it measured the loss and gradient.
+In other words, it tried three different alternatives by taking three different-sized steps (blue, green and pink arrows) along the gradient direction, using three different learning rates. That brought us to three different next points for P_t+1. Then, at each of those P_t+1 points, it measured the new loss and gradient.
 
-After this it repeated all three steps for the same network with Batch Norm.
+After this it repeated all three steps for the same network, but with Batch Norm included.
 
 ![]({{ site.baseurl }}/assets/images/BatchNorm/Smooth-2.png)
 * (Image by Author)*
 
-Now we can plot the loss at each of those P_t+1 points (blue, green and pink) just in that single direction. The bumpy red curve shows the loss without Batch Norm and the smooth yellow curve shows the loss with Batch Norm.
+Now we can plot the loss at each of those P_t+1 points (blue, green and pink) just in that single direction. The bumpy red curve shows the loss without Batch Norm and the smooth declining yellow curve shows the loss with Batch Norm.
 
 ![]({{ site.baseurl }}/assets/images/BatchNorm/Smooth-3.png)
 * (Image by Author)*
@@ -117,6 +116,8 @@ The ideal scenario is that at the next point P_t+1, the gradient also lies in th
 On the other hand, if the best gradient direction at P_t+1 took us in a different direction, we would end up following a zig-zag route with wasted effort. That would require more training iterations to converge.
 
 Although this paper's findings have not been challenged so far, it isn't clear whether they've been fully accepted as conclusive proof to close this debate.
+
+Regardless of which theory is correct, what we do know for sure is that Batch Norm provides several advantages.
 
 ## Advantages of Batch Norm
 The huge benefit that Batch Norm provides is to allow the model to converge faster and speed up training. It makes the training less sensitive to how the weights are initialized and to the precise tuning of hyperparameters.
