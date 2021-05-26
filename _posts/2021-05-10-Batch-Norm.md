@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Neural Network Architectures Explained Visually - Batch Norm
-subtitle: A Gentle Guide to the indispensable Batch Norm layer, in Plain English
-imagecaption: Photo by [](https://unsplash.com/@hirmin) on [Unsplash](https://unsplash.com) 
+title: Batch Norm Explained Visually — How it works, and why neural networks need it
+subtitle: A Gentle Guide to an all-important Deep Learning layer, in Plain English
+imagecaption: Photo by [Reuben Teo](https://unsplash.com/@reubenteo) on [Unsplash](https://unsplash.com) 
 categories: [ Neural, tutorial ]
 author: ketan
-tags: featured
-image: https://images.unsplash.com/photo-1571156425562-12341e7c9aae?w=1200
+tags: 
+image: https://images.unsplash.com/photo-1545841729-10c1118027a1?w=1200
 ---
 
 Batch Norm is an essential part of the toolkit of the modern deep learning practitioner. Soon after it was introduced in the Batch Normalization [paper](https://arxiv.org/pdf/1502.03167.pdf), it was recognized as being transformational in creating deeper neural networks that could be trained faster.

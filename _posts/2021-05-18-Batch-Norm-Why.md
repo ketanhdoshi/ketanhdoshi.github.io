@@ -1,13 +1,19 @@
 ---
 layout: post
-title: Neural Network Architectures Explained Visually - Batch Norm
-subtitle: A Gentle Guide to the indispensable Batch Norm layer, in Plain English
+title: Batch Norm Explained Visually — Why it speeds up training
+subtitle: A Gentle Guide to why Batch Norm works and the reasons for training converging faster, in Plain English
 imagecaption: Photo by [](https://unsplash.com/@hirmin) on [Unsplash](https://unsplash.com) 
 categories: [ Neural, tutorial ]
 author: ketan
-tags: featured
+tags: 
 image: https://images.unsplash.com/photo-1571156425562-12341e7c9aae?w=1200
 ---
+
+The Batch Norm layer is frequently used in deep learning models in association with a Convolutional or Linear layer. Many state-of-the-art Computer Vision architectures such as Inception and Resnet rely on it to create deeper networks that can be trained faster.
+
+In this article, we will explore _why_ Batch Norm works and why it requires fewer training epochs when training a model.
+
+You might also enjoy reading my other article which explains, in simple language, what Batch Norm is and walks through, step by step, how it operates under the hood.
 
 ## Why does Batch Norm work?
 There is no dispute that Batch Norm works wonderfully well and provides substantial measurable benefits to deep learning architecture design and training. However, curiously, there is still no universally agreed answer about what gives it its amazing powers.
@@ -70,10 +76,50 @@ If you would like to read more about this, please see my [article](https://ketan
 
 What Batch Norm does is to smoothen the loss landscape substantially by changing the distribution of the network's weights. This means that gradient descent can confidently take a step in a direction knowing that it will not find abrupt disruptions along the way. It can thus take larger steps by using a bigger learning rate.
 
+To investigate this theory, the paper conducted an experiment to analyze the loss landscape of a model during training. We'll try and visualize this with a simple example.
+
+Let's say that we have a simple network with two parameters (w1 and w2). The values of these weights can be shown on a 2D surface, with one axis for each weight. Each combination of weight values correspond to a point on this 2D plane. 
+
+?? At a certain iteration 't' during training, the two weights are at point Pt. The network now calculates the gradient of the loss with respect to each weight. It then takes a step along the direction of that gradient by updating the weights and moving to point P_t+1. We then repeat the process and move to point P_t+2. ??
+
+As the weights change during training, we move to another point on this surface.  Hence one can plot the trajectory of the weights over the training iterations.
+
+Note that the picture below displays only the weight values at each point. To visualize the loss, imagine a 3D surface, with a third axis for the loss coming out of the paper. If we measured and plotted the loss for all the different combinations of weights, the shape of that loss curve is called the loss landscape.
+
+![]({{ site.baseurl }}/assets/images/BatchNorm/Smooth-1.png)
+* (Image by Author)*
+
+The goal of the experiment was to examine the loss landscape, by measuring what the Loss and Gradient would look like at different points if we kept moving in the same direction. They measured this with and without Batch Norm, to see what effect Batch Norm had.
+
+So, starting from Pt, it took a single step forward with some learning rate to reach a next point P_t+1. Then it went back to Pt and repeated the step with a different learning rate. 
+
+In other words, it tried three different alternatives by taking three different-sized steps (blue, green and pink arrows) along the gradient direction, using three different learning rates. That brought us to three different next points for P_t+1. Then, at each of those P_t+1 points, it measured the loss and gradient.
+
+After this it repeated all three steps for the same network with Batch Norm.
+
+![]({{ site.baseurl }}/assets/images/BatchNorm/Smooth-2.png)
+* (Image by Author)*
+
+Now we can plot the loss at each of those P_t+1 points (blue, green and pink) just in that single direction. The bumpy red curve shows the loss without Batch Norm and the smooth yellow curve shows the loss with Batch Norm.
+
+![]({{ site.baseurl }}/assets/images/BatchNorm/Smooth-3.png)
+* (Image by Author)*
+
+Similarly, we can plot the size and direction of the gradient at each of those points. The red arrows shows the gradient fluctuating wildly in size and direction without Batch Norm. The yellow arrows shows the gradient remaining steady in size and direction with Batch Norm.
+
+![]({{ site.baseurl }}/assets/images/BatchNorm/Smooth-4.png)
+* (Image by Author)*
+
+This experiment shows us that Batch Norm significantly smoothens the loss landscape. How does that help our training? 
+
+The ideal scenario is that at the next point P_t+1, the gradient also lies in the same direction. This means that we can continue moving in the same direction. This allows the training to proceed smoothly and quickly find the minimum. 
+
+On the other hand, if the best gradient direction at P_t+1 took us in a different direction, we would end up following a zig-zag route with wasted effort. That would require more training iterations to converge.
+
 Although this paper's findings have not been challenged so far, it isn't clear whether they've been fully accepted as conclusive proof to close this debate.
 
 ## Advantages of Batch Norm
-The huge benefit that Batch Norm provides is to allow the model to converge faster and speed up training. It makes the training less sensitive to how the weights are initialized and to precise tuning of hyperparameters.
+The huge benefit that Batch Norm provides is to allow the model to converge faster and speed up training. It makes the training less sensitive to how the weights are initialized and to the precise tuning of hyperparameters.
 
 Batch Norm lets you use higher learning rates. Without Batch Norm, learning rates have to be kept small to prevent large outlier gradients from affecting the gradient descent. Batch Norm helps to reduce the effect of these outliers.
 
