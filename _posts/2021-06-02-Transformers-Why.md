@@ -24,20 +24,22 @@ Here’s a quick summary of the previous and following articles in the series.
 3. [**Multi-head Attention**](https://ketanhdoshi.github.io/Transformers-Attention/) (_Inner workings of the Attention module throughout the Transformer_)
 4. Why Attention Boosts Performance — this article (_Not just what Attention does but why it works so well. How does Attention capture the relationships between words in a sentence_)
 
+To understand what makes the Transformer tick, we must focus on Attention. Let's start with the input that goes into it, and then look at how it processes that input.
+
 ## How does the Attention module get its input
 
-The heart of the Transformer which gives its powers is the Attention module. This is present in every Encoder Layer in the Encoder, as well as every Decoder Layer in the Decoder.
+The Attention module is present in every Encoder in the Encoder stack, as well as every Decoder in the Decoder stack. We'll zoom in on the Encoder attention first.
 
 ![]({{ site.baseurl }}/assets/images/TransformerAttn/Attn-2.png)
 *Should we show only the Encoder part here not Decoder (Image by Author)*
 
-We'll start by zooming in on Encoder Attention, and look at where it gets its input data from, and what calculations it performs on it. For example, let's say that we're working on a translation problem, where one sample source sequence in English is "The ball is blue". The target sequence in Spanish is "El bola es azul".
+As an example, let's say that we're working on a translation problem, where one sample source sequence in English is "The ball is blue". The target sequence in Spanish is "El bola es azul".
 
 The source sequence is first passed through the Embedding and Position Encoding layer, which generates embedding vectors for each word in the sequence. The embedding is passed to the Encoder where it first reaches the Attention module.
 
-Within Attention, the embedded sequence is passed through three Linear layers which produce three separate vectors - known as the Query, Key and Value. These are the three parameters that are used to compute the Attention Score.
+Within Attention, the embedded sequence is passed through three Linear layers which produce three separate matrices - known as the Query, Key and Value. These are the three matrices that are used to compute the Attention Score.
 
-The important thing to keep in mind is that each 'row' of these vectors corresponds to one word in the source sequence.
+The important thing to keep in mind is that each 'row' of these matrices corresponds to one word in the source sequence.
 
 ![]({{ site.baseurl }}/assets/images/TransformerWhy/Data-1.png)
 *(Image by Author)*
@@ -53,7 +55,7 @@ So to simplify the explanation and the visualization, let's ignore the embedding
 ![]({{ site.baseurl }}/assets/images/TransformerWhy/Data-2.png)
 *(Image by Author)*
 
-Each such row has been generated from its corresponding source word by a series of transformations - embedding, position encoding, linear weights. 
+Each such row has been generated from its corresponding source word by a series of transformations - embedding, position encoding, linear weights.
 
 All of those transformations are trainable operations. This means that the weights used in those operations are not pre-decided but are learned by the model in such a way that they produce the desired output predictions. 
 
@@ -64,6 +66,12 @@ The key question is, how does the Transformer figure out what set of weights wil
 
 ## Calculations performed by Attention Module
 
+![]({{ site.baseurl }}/assets/images/TransformerArch/Attn-1.png)
+*Multi-head attention (Image by Author)*
+
+![]({{ site.baseurl }}/assets/images/TransformerWhy/Attn-6.png)
+*Attention Score formula with softmax, dk. Show Q, K, V not matrix drawings. (Image by Author)*
+
 The first step within Attention is to do a matrix multiply (ie. dot product) between the Query (Q) matrix and a transpose of the Key (K) matrix. Watch what happens to each word.
 
 We produce an intermediate matrix (let's call it a 'factor' matrix) where each cell is a matrix multiplication between two words. 
@@ -71,7 +79,7 @@ We produce an intermediate matrix (let's call it a 'factor' matrix) where each c
 ![]({{ site.baseurl }}/assets/images/TransformerWhy/Attn-1.png)
 *(Image by Author)*
 
-For instance, each column in the third row corresponds to a matrix multiply between the third Query word with every Key word.
+For instance, each column in the fourth row corresponds to a matrix multiply between the fourth Query word with every Key word.
 
 ![]({{ site.baseurl }}/assets/images/TransformerWhy/Attn-2.png)
 *(Image by Author)*
@@ -85,7 +93,7 @@ This produces the Attention Score vector (Z) that is output by the Attention Mod
 
 The way to think about the output score is that, for each word, it is the encoded value of every word from the "Value" matrix, weighted by the "factor" matrix. Where, the factor matrix is the dot product of the Query value for that specific word with the Key value of all words.
 
-![]({{ site.baseurl }}/assets/images/TransformerWhy/xxx-8.png)
+![]({{ site.baseurl }}/assets/images/TransformerWhy/Attn-7.png)
 *Show the formula of Each word of value weighted by Factor Matrix (Image by Author)*
 
 So the Query word can be interpreted as the word _for which_ we are calculating Attention. The Key and Value word is the word _to which_ we are paying attention ie. how relevant is that word to the Query word.
@@ -95,7 +103,7 @@ So the Query word can be interpreted as the word _for which_ we are calculating 
 
 For example, for the sentence, "The ball is blue", the row for the word "blue" will contain the attention scores for "blue" with every other word. Here, "blue" is the Query word, and the other words are the "Key/Value".
 
-There are other operations being performed such as a division and a softmax, but we can ignore them in this article. They just change the numeric values in the matrices but don't affect the mapping of each word to rows in the matrix. Nor do they involve any inter-word interactions.
+There are other operations being performed such as a division and a softmax, but we can ignore them in this article. They just change the numeric values in the matrices but don't affect the position of each word row in the matrix. Nor do they involve any inter-word interactions.
 
 ## What is the significance of the matrix multiply
 So we have seen that the attention score is capturing some interaction between a particular word, and every other word in the sentence, by doing a matrix multiply, and then adding them up. But how does the matrix multiply help the Transformer determine the relevance between two words?
@@ -107,8 +115,8 @@ To understand this, remember that the Query, Key and Value rows are actually vec
 ![]({{ site.baseurl }}/assets/images/TransformerWhy/Attn-3.png)
 *Two vectors doing a matrix multiply ie. a multiply between corresponding elements and a sum (Image by Author)*
 
-When we do a dot product between two vectors, we multiply pairs of numbers and then add them up.
-- If the two numbers (eg. 'a' and 'd' above) are both positive or both negative, then the product will be positive. The product will increase the final summation.
+When we do a dot product between two vectors, we multiply pairs of numbers and then sum them up.
+- If the two paired numbers (eg. 'a' and 'd' above) are both positive or both negative, then the product will be positive. The product will increase the final summation.
 - If one number is positive and other negative, then the product will be negative. The product will reduce the final summation.
 - If the product is positive, the larger the two numbers, the more they contribute to the final summation.
 
@@ -118,7 +126,7 @@ When we do a dot product between two vectors, we multiply pairs of numbers and t
 This means that if the signs of the corresponding numbers in the two vectors are aligned, the final sum will be larger.
 
 ## Matrix multiply for Attention (Version 2)
-In the case of Attention Score, the matrix dot product will produce a higher attention score for two words if the word vectors for those two words are aligned.
+This idea applies to the Attention score as well. If the vectors for two words are more aligned, the attention score will be higher.
 
 So what is the behavior we want?
 
@@ -129,7 +137,7 @@ We want "milk" and "drank" to produce a high attention score. for "milk" and "ca
 
 This is the output we want the model to learn to produce.
 
-For this to happen, the word vectors for "milk" and "drank" must be aligned. The vectors for "milk" and "black" will diverge somewhat. And they will be quite different for "milk" and "black".
+For this to happen, the word vectors for "milk" and "drank" must be aligned. The vectors for "milk" and "cat" will diverge somewhat. And they will be quite different for "milk" and "black".
 
 Now, let's go back to the point that we kept in the back of our minds.
 
@@ -156,7 +164,7 @@ Attention is used in the Transformer in three places:
 ![]({{ site.baseurl }}/assets/images/TransformerAttn/Attn-1.png)
 *(Image by Author)*
 
-In the Encoder Self Attention, we compute the relevance of each word in the source sentence to each other word in the source sentence. 
+In the Encoder Self Attention, we compute the relevance of each word in the source sentence to each other word in the source sentence. This happens in all the Encoders in the stack.
 
 Most of what we've just seen in the Encoder Self Attention applies to Attention in the Decoder as well, with a few small but significant differences.
 
@@ -174,11 +182,9 @@ In the Encoder-Decoder Attention, the Query is obtained from the target sentence
 *Encoder Decoder Attention (Image by Author)*
 
 ## Conclusion
-Hopefully, this gives you a feel for what goes on inside the Transformer during Training. As we discussed in the previous article, it runs in a loop during Inference but most of the processing remains the same.
+Hopefully, .....
 
-The Multi-head Attention module is what gives the Transformer its power. In the next article, we will continue our journey and go one step deeper to really understand the details of how Attention is computed.
-
-And finally, if you are interested in NLP, you might also enjoy my article on Beam Search, and my other series on Audio Deep Learning and Reinforcement Learning.
+And finally, if you are interested in NLP, you might also enjoy .
 
 [State-of-the-Art Techniques](https://ketanhdoshi.github.io/Audio-Intro/)
 
