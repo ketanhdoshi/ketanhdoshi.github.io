@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Batch Norm Explained Visually - Why does it work
+title: Batch Norm Explained Visually - Why does it work?
 subtitle: A Gentle Guide to the reasons for the Batch Norm layer's success in making training converge faster, in Plain English
-imagecaption: Photo by [](https://unsplash.com/@hirmin) on [Unsplash](https://unsplash.com) 
+imagecaption: Photo by [AbsolutVision](https://unsplash.com/@freegraphictoday) on [Unsplash](https://unsplash.com) 
 categories: [ Neural, tutorial ]
 author: ketan
 tags: 
-image: https://images.unsplash.com/photo-1571156425562-12341e7c9aae?w=1200
+image: https://images.unsplash.com/photo-1512314889357-e157c22f938d?w=1000
 ---
 
 The Batch Norm layer is frequently used in deep learning models in association with a Convolutional or Linear layer. Many state-of-the-art Computer Vision architectures such as Inception and Resnet rely on it to create deeper networks that can be trained faster.
@@ -14,6 +14,10 @@ The Batch Norm layer is frequently used in deep learning models in association w
 In this article, we will explore _why_ Batch Norm works and why it requires fewer training epochs when training a model.
 
 You might also enjoy reading my other article on Batch Norm which explains, in simple language, what Batch Norm is and walks through, step by step, how it operates under the hood.
+
+And if you’re interested in Neural Network architectures in general, I have some other articles you might like.
+1. Optimizer Algorithms (Fundamental techniques used by gradient descent optimizers like SGD, Momentum, RMSProp, Adam, and others)
+2. Image Captions Architecture (Multi-modal CNN and RNN architectures with Image Feature Encoders, Sequence Decoders, and Attention)
 
 ## Why does Batch Norm work?
 There is no dispute that Batch Norm works wonderfully well and provides substantial measurable benefits to deep learning architecture design and training. However, curiously, there is still no universally agreed answer about what gives it its amazing powers.
@@ -45,7 +49,7 @@ Suppose that we now feed the model some different testing data as below. This ha
 For instance, this scenario can happen if we trained an image classification model, say, with pictures of passenger planes and then test it later with pictures of military aircraft.
 
 ![]({{ site.baseurl }}/assets/images/BatchNorm/ICS-4.png)
-*Rest of the target curve (Image by Author)*
+*Test data has different distribution (Image by Author)*
 
 This is the problem of Covariate Shift - the model is fed data with a very different distribution than what it was previously trained with - _even though that new data still conforms to the same target function_. 
 
@@ -101,12 +105,12 @@ After this, it repeated all three steps for the same network, but with Batch Nor
 Now we can plot the loss at each of those P(t+1) points (blue, green, and pink) just in that single direction. The bumpy red curve shows the loss without Batch Norm and the smooth declining yellow curve shows the loss with Batch Norm.
 
 ![]({{ site.baseurl }}/assets/images/BatchNorm/Smooth-3.png)
-* (Image by Author)*
+*Loss with Batch declines smoothly (Image by Author)*
 
 Similarly, we can plot the size and direction of the gradient at each of those points. The red arrows show the gradient fluctuating wildly in size and direction without Batch Norm. The yellow arrows show the gradient remaining steady in size and direction with Batch Norm.
 
 ![]({{ site.baseurl }}/assets/images/BatchNorm/Smooth-4.png)
-* (Image by Author)*
+*Gradients with Batch Norm are smoother (Image by Author)*
 
 This experiment shows us that Batch Norm significantly smoothens the loss landscape. How does that help our training? 
 

@@ -13,13 +13,13 @@ Transformers have taken the world of NLP by storm in the last few years. Now the
 
 The Transformer gets its powers because of the Attention module. And this happens because it captures the relationships between each word in a sequence with every other word. 
 
-But the all-important question is _how_ is it able to do that?
+But the all-important question is _how_ exactly does it do that?
 
 In this article, we will attempt to answer that question, and understand _why_ it performs the calculations that it does.
 
 I have a few more articles in my series on Transformers. In those articles, we learned about the Transformer architecture, and walked through their operation during training and inference, step-by-step. We also explored under the hood and understood exactly how they work in detail. 
 
-Our goal has been to understand not just how something works but why it works that way.
+Our goal is to understand not just how something works but why it works that way.
 
 1. [**Overview of functionality**](https://ketanhdoshi.github.io/Transformers-Overview/) (_How Transformers are used, and why they are better than RNNs. Components of the architecture, and behavior during Training and Inference_)
 2. [**How it works**](https://ketanhdoshi.github.io/Transformers-Arch/) (_Internal operation end-to-end. How data flows and what computations are performed, including matrix representations_)
@@ -28,7 +28,7 @@ Our goal has been to understand not just how something works but why it works th
 
 To understand what makes the Transformer tick, we must focus on Attention. Let's start with the input that goes into it, and then look at how it processes that input.
 
-## How does the input sequence reach Attention
+## How does the input sequence reach the Attention module
 
 The Attention module is present in every Encoder in the Encoder stack, as well as every Decoder in the Decoder stack. We'll zoom in on the Encoder attention first.
 
@@ -59,7 +59,7 @@ So to simplify the explanation and the visualization, let's ignore the embedding
 ![]({{ site.baseurl }}/assets/images/TransformerWhy/Data-2.png)
 *(Image by Author)*
 
-## Each word goes through a series of trainable transformations
+## Each word goes through a series of learnable transformations
 
 Each such row has been generated from its corresponding source word by a series of transformations - embedding, position encoding and linear layer.
 
