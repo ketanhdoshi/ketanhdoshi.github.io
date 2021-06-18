@@ -28,7 +28,7 @@ description: "A great Jekyll theme developed by Sal @wowthemesnet."
     <a class="text-dark" href="{{site.baseurl}}{{latest_post.url}}">{{ latest_post.title }}</a>
     </h2>
     <p class="excerpt">
-        {{ latest_post.excerpt | strip_html | strip_newlines | truncate: 136 }}
+        {{ latest_post.subtitle | strip_html | strip_newlines | truncate: 136 }}
     </p>
     <div>
         <small class="d-block text-muted">
@@ -142,7 +142,7 @@ description: "A great Jekyll theme developed by Sal @wowthemesnet."
             <div class="col-md-6 pt-6 pb-6 pr-lg-4 align-self-center">
                 <h1 class="mb-3">{{post.title}}</h1>
                 <p class="mb-3 lead">
-                    {{ post.excerpt | strip_html | strip_newlines | truncate: 136 }}
+                    {{ post.subtitle | strip_html | strip_newlines | truncate: 136 }}
                 </p>
                 <a href="{{site.baseurl}}{{post.url}}" class="btn btn-dark">Read More</a>
             </div>
